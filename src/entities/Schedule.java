@@ -21,7 +21,7 @@ public class Schedule {
 	}
 
 	
-	public TimeEvent getEventAtTime(data.Time t){
+	public TimeEvent getEventAtTime(Time t){
 		return null;
 	}
 }

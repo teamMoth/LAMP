@@ -1,10 +1,14 @@
 package entities;
 
+import java.util.ArrayList;
+
 import data.Time;
+import data.Tag;
 
 public class Entity {
 
 	private Schedule entitySchedule;
+	private ArrayList<Tag> tags = new ArrayList<Tag>();
 
 	public Entity(Schedule entitySchedule){
 		this.entitySchedule = entitySchedule;
