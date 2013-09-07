@@ -8,17 +8,16 @@ import data.Time;
 public class Entity {
 
 	private Schedule entitySchedule;
-	private ArrayList<String> tags = new ArrayList<String>();
+	private ArrayList<String> tags;
+	private String Name;
 	private String ID;
 
 	/**
-	 * Creates an entity with the schedule passed to it
-	 * 
-	 * @param entitySchedule
+	 * Creates an entity
 	 */
-	public Entity(Schedule entitySchedule) {
-		this.entitySchedule = entitySchedule;
-		ID=String.valueOf(Integer.toHexString(this.hashCode()).toString().substring(4, 8));
+	public Entity() {
+		entitySchedule = new Schedule();
+		tags = new ArrayList<String>();
 	}
 
 	/**
@@ -60,13 +59,11 @@ public class Entity {
 		return entitySchedule;
 	}
 
-	/**
-	 * Sets the entity's schedule to the schedule passed to it
-	 */
-	public void setSchedule(Schedule newSchedule) {
-		this.entitySchedule = newSchedule;
+	public void addEvent(String eventName, int startTime, int endTime) {
+		
 	}
-
+	
+	
 	/**
 	 * Returns what event the entity has at time t.
 	 * 
@@ -81,7 +78,7 @@ public class Entity {
 	 * including the available times.
 	 */
 	public Set<Time> timesFree() {
-		return null;
+		return entitySchedule.timesFree();
 	}
 	
 	/**

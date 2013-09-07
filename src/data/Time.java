@@ -22,14 +22,13 @@ public class Time {
 	public Time (){
 	}
 	
-	
 	/**
 	 * Time constructor that stores hours and minutes
 	 * @param hours
 	 * @param minutes
 	 * @throws InvalidEventException throws if time entered is invalid (e.g. minutes = 100)
 	 */
-	public Time (int weekday, int hours, int minutes) throws InvalidEventException{
+	public Time (int weekday, int hours, int minutes) {
 		setWeekday(weekday);
 		setHour(hours);
 		setMinute(minutes);
@@ -62,22 +61,36 @@ public class Time {
 	/**
 	 * changes the stored hour value to parameter
 	 * @param hour the new hour value to be stored
-	 * @throws InvalidEventException throws if hour is negative or greater than 23
 	 */
-	public void setHour(int hour) throws InvalidEventException{
-		if (hour < 0 || hour > 23)
-			throw new InvalidEventException("Invalid hour value (negative or greater than 23)");
+	public void setHour(int hour) {
+		while (hour < 0) {
+			setWeekday(getWeekday() - 1);
+			hour += 24; 
+		}
+		
+		while (hour > 23) {
+			setWeekday(getWeekday() + 1);
+			hour -= 24;
+		}
+		
 		this.hour = hour;
 	}
 	
 	/**
 	 * changes the stored minute value to parameter
 	 * @param minute the new minute value to be stored
-	 * @throws InvalidEventException throws if minutes is negative or greater than 60
 	 */
-	public void setMinute(int minute) throws InvalidEventException {
-		if (minute < 0 || minute > 59)
-			throw new InvalidEventException("Invalid minute value (negative or greater than 59)");
+	public void setMinute(int minute) {
+		while (minute < 0) {
+			setHour(getHour() - 1);
+			minute += 60;
+		}
+			
+		while (minute > 59) {
+			setHour(getHour() + 1);
+			minute -= 60;
+		}
+			
 		if ( minute > (60 - (TIME_INTERVAL/2)) ) {
 			setHour(getHour() + 1);
 			minute = 0;
@@ -89,14 +102,29 @@ public class Time {
 	/**
 	 * changes the stored minute value to parameter
 	 * @param minute the new minute value to be stored
-	 * @throws InvalidEventException throws if day of the week is invalid
 	 */
-	public void setWeekday(int minute) throws InvalidEventException {
-		if (weekday < 1 || weekday > 7)
-			throw new InvalidEventException("Invalid Day of the Week");
+	public void setWeekday(int minute) {
+		while (weekday < 0)
+			weekday += 7;
+		
+		while (weekday > 6)
+			weekday -= 7;
+		
 		this.weekday = nearestInterval(weekday);
 	}
-		
+	
+	/**
+	 * returns true if this Time is equal to parameter Time b
+	 * @param b Time Object to compare to this object
+	 * @return if the two Time objects are equal
+	 */
+	public boolean equals(Time b){
+		if (this.weekday == b.weekday && this.hour == b.hour && this.minute == b.minute)
+			return true;
+		else
+			return false;
+	}
+	
 	
 	/**
 	 * returns the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
@@ -139,8 +167,7 @@ public class Time {
 				minute -= delta;
 			return minute;
 		}
-		
-		
 	}
+	
 	
 }

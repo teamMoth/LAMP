@@ -1,17 +1,19 @@
 package entities;
 
+import data.Time;
+
 public class TimeEvent {
 
 	private String name = null;
-	private int startTime;
-	private int endTime;
+	private Time startTime;
+	private Time endTime;
 	public TimeEvent() {
 	}
 	
-	public TimeEvent(String name, int startTime, int endTime) {
+	public TimeEvent(String name, Time start, Time end) {
 		this.name = name;
-		this.startTime = startTime;
-		this.endTime = endTime;
+		this.startTime = start;
+		this.endTime = end;
 	}
 	
 	/**
@@ -26,7 +28,7 @@ public class TimeEvent {
 	 * returns the starting time of the event
 	 * @return the starting time of the event
 	 */
-	public int getStartTime() {
+	public Time getStartTime() {
 		return startTime;
 	}
 	
@@ -34,7 +36,7 @@ public class TimeEvent {
 	 * returns the ending time of the event
 	 * @return the ending time of the event
 	 */
-	public int getEndTime() {
+	public Time getEndTime() {
 		return endTime;
 	}
 }

@@ -6,14 +6,18 @@ public class EntityGroup {
 	
 	private ArrayList<Entity> entityList= new ArrayList<Entity>();
 	
+	/**
+	 * add an entity to the group
+	 * @param ent entity to be added to the group
+	 */
 	public void addEntity(Entity ent){
 		if (!entityList.contains(ent))
 			entityList.add(ent);
 	}
 	
 	/**
-	 * 
-	 * @param ent
+	 * deletes the entity passed to it from the group
+	 * @param ent entity to be deleted from the group
 	 */
 	public void delEntity(Entity ent){
 		entityList.remove(ent);
