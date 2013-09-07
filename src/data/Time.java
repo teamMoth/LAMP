@@ -29,7 +29,8 @@ public class Time {
 	 * @param minutes
 	 * @throws InvalidEventException throws if time entered is invalid (e.g. minutes = 100)
 	 */
-	public Time (int hours, int minutes) throws InvalidEventException{
+	public Time (int weekday, int hours, int minutes) throws InvalidEventException{
+		setWeekday(weekday);
 		setHour(hours);
 		setMinute(minutes);
 	}
