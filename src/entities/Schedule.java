@@ -1,5 +1,8 @@
 package entities;
 
+import java.sql.Time;
+
+
 public class Schedule {
 
 	private TimeEvent[][] timeArray = new TimeEvent[DAYS_A_WEEK][INTERVALS_A_DAY];
@@ -23,7 +26,7 @@ public class Schedule {
 	 * @param time time to be rounded as
 	 * @return rounded time
 	 */
-	private int nearestInterval(int time) {
+	private int nearestInterval(Time t) {
 		if (time % TIME_INTERVAL  == 0)
 			return time;
 		else {
@@ -34,6 +37,10 @@ public class Schedule {
 				time -= delta;
 			return time;
 		}
+	}
+	
+	public TimeEvent getEventAtTime(Time t){
+		return null;
 	}
 }
 

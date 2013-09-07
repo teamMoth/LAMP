@@ -1,5 +1,7 @@
 package entities;
 
+import java.sql.Time;
+
 public class Entity {
 
 	private Schedule entitySchedule;
@@ -24,13 +26,15 @@ public class Entity {
 	/*
 	 * Returns the entity which has an event at time t.
 	 */
-	public TimeEvent eventAtTime(int t){
-		return entitySchedule.getEventAtTime(t);}
+	public TimeEvent eventAtTime(Time t){
+		return entitySchedule.getEventAtTime(t);
+	}
 
 	/*
 	 * Returns the schedule, in array form, of the Entity in question ONLY including the available times.
 	 */
 	public Schedule timesFree(){
-		return null;}
+		return null;
+		}
 
 }
