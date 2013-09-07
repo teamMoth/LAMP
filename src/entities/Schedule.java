@@ -39,7 +39,7 @@ public class Schedule {
 		}
 	}
 	
-	public TimeEvent getEventAtTime(Time t){
+	public TimeEvent getEventAtTime(data.Time t){
 		return null;
 	}
 }

@@ -1,6 +1,6 @@
 package entities;
 
-import java.sql.Time;
+import data.Time;
 
 public class Entity {
 
