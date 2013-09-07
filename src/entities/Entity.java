@@ -2,22 +2,30 @@ package entities;
 
 public class Entity {
 	
+	private Schedule entitySchedule;
+	
+	public Entity(Schedule entitySchedule){
+		this.entitySchedule = entitySchedule;
+	}
+	
 	/*
 	 * Returns the schedule, in array form, of the Entity in question.
 	 */
 	public Schedule getSchedule(){
-		return null;}
+		return entitySchedule;}
 	
 	/*
 	 * Sets the schedule to "schedule" of the Entity in question.
 	 */
-	public void setSchedule(Object[] schedule){}
+	public void setSchedule(Schedule newSchedule){
+		this.entitySchedule = newSchedule;
+	}
 	
 	/*
 	 * Returns the entity which has an event at time t.
 	 */
-	public Entity eventAtTime(int t){
-		return null;}
+	public TimeEvent eventAtTime(int t){
+		return entitySchedule.getEventAtTime(t);}
 	
 	/*
 	 * Returns the schedule, in array form, of the Entity in question ONLY including the available times.
