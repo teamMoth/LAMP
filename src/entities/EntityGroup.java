@@ -11,10 +11,21 @@ public class EntityGroup {
 			entityList.add(ent);
 	}
 	
+	/**
+	 * 
+	 * @param ent
+	 */
 	public void delEntity(Entity ent){
 		entityList.remove(ent);
 	}
 	
+	/**
+	 * returns the list of entities in the group
+	 * @return list of entities in the group
+	 */
+	public ArrayList<Entity> getEntities(){
+		return entityList;
+	}
 	
 	
 	
