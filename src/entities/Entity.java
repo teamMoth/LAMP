@@ -18,6 +18,7 @@ public class Entity {
 	 */
 	public Entity(Schedule entitySchedule) {
 		this.entitySchedule = entitySchedule;
+		ID=String.valueOf(Integer.toHexString(this.hashCode()).toString().substring(4, 8));
 	}
 
 	/**
@@ -81,6 +82,13 @@ public class Entity {
 	 */
 	public Set<Time> timesFree() {
 		return null;
+	}
+	
+	/**
+	 * Returns the Identifier of the Entity Object, to be used for saving purposes.
+	 */
+	public String getID(){
+		return ID;
 	}
 
 }
