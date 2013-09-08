@@ -21,8 +21,19 @@ public class MidEndFormatting {
 		scheduleComparison sc = new scheduleComparison(eg);
 		EntityGroup eg2 = sc.freeMembers(t);
 		
+		
 		for (Entity e:eg2.getEntities()){
-			toReturn += e.getName() + " is free right now\n";
+			ArrayList<String> tags = e.getTags();
+			boolean person = true;
+			for (String s : tags){
+				if(s.equalsIgnoreCase("building")){
+					person = false;
+				}
+			}
+			
+			if(person){
+				toReturn += e.getName() + " is free right now\n";
+			}
 		}
 		
 		return toReturn;
@@ -41,8 +52,16 @@ public class MidEndFormatting {
 		EntityGroup eg2 = sc.freeMembers(t);
 		EntityGroup eg3 = new EntityGroup();
 		
+		
 		for (Entity e : eg.getEntities()){
-			if(!eg2.getEntities().contains(e)){
+			ArrayList<String> tags = e.getTags();
+			boolean person = true;
+			for (String s : tags){
+				if(s.equalsIgnoreCase("building")){
+					person = false;
+				}
+			}
+			if(person && !eg2.getEntities().contains(e)){
 				eg3.addEntity(e);
 			}
 		}
@@ -54,11 +73,27 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 
-	static String openBuildings(){
+	static String openBuildings(EntityGroup buildings, Time t){
 		String toReturn = "";
-
-
-
+		
+		scheduleComparison sc = new scheduleComparison(buildings);
+		EntityGroup buildings2 = sc.freeMembers(t);
+		
+		
+		for (Entity e:buildings2.getEntities()){
+			ArrayList<String> tags = e.getTags();
+			boolean building = false;
+			for (String s : tags){
+				if(s.equalsIgnoreCase("building")){
+					building = true;
+				}
+			}
+			
+			if(building){
+				toReturn += e.getName() + " is currently open\n";
+			}
+		}
+		
 		return toReturn;
 	}
 
