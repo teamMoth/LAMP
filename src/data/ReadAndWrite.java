@@ -9,7 +9,7 @@ import entities.Entity;
 
 public class ReadAndWrite {
 
-	public void writeToFile(Entity ent){
+	public static void writeToFile(Entity ent){
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		
@@ -24,13 +24,13 @@ public class ReadAndWrite {
 		}
 	}
 	
-	public Entity readFromFile(Entity entity){
+	public static Entity readEntityFromFile(String ID){
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		Entity ent = null;
 		
 		try {
-			fis = new FileInputStream(entity.getName());
+			fis = new FileInputStream(ID);
 			ois = new ObjectInputStream(fis);
 			ent = (Entity) ois.readObject();
 			ois.close();

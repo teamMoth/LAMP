@@ -2,10 +2,18 @@ package entities;
 
 import java.util.ArrayList;
 
+import data.ReadAndWrite;
+
 public class EntityGroup {
 	
 	private ArrayList<Entity> entityList= new ArrayList<Entity>();
+	private String name;
 	
+	public EntityGroup(String ID) {
+		ReadAndWrite.readFromFile(ID);
+		//TODO
+	}
+
 	/**
 	 * add an entity to the group
 	 * @param ent entity to be added to the group
@@ -29,6 +37,10 @@ public class EntityGroup {
 	 */
 	public ArrayList<Entity> getEntities(){
 		return entityList;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	
