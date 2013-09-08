@@ -24,14 +24,15 @@ public class ScheduleGUI extends JPanel{
 	private Calendar myCalendar;
 	private int hardCodedNumber = 21;
 	private static Status status = Status.FREE;
+	private String scheduleName;
 	
 	
-	public ScheduleGUI(){
+	public ScheduleGUI(String name){
 		myCalendar = new Calendar(HOURS_IN_DAY * SECTIONS_IN_HOUR, DAYS_IN_WEEK);
+		this.scheduleName = name;
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		JLabel leftTitle = new JLabel("Time");
-		leftTitle.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
 		JLabel middleTitle = new JLabel("Middle");
 		JLabel rightTitle = new JLabel("Right");
 		
@@ -40,56 +41,62 @@ public class ScheduleGUI extends JPanel{
 		textArea.setEditable(false);
 			    	
 		JPanel left = new JPanel();
-		left.setPreferredSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
+		left.setSize(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber);
 		left.setMinimumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		left.setMaximumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
+		left.setBackground(Color.WHITE);
 		left.add(leftTitle);
 		for (int i = 0; i < HOURS_IN_DAY; i ++){
-			System.out.println(i);
 			for (int j = 0; j < SECTIONS_IN_HOUR; j ++){
 				String time = (Time.START_HOUR + i) + ":" + (j * 30);
 				JLabel label = new JLabel(time);
-				label.setPreferredSize(new Dimension(PANEL_MIN_WIDTH, CELL_HEIGHT));
-				label.setMinimumSize(new Dimension(PANEL_MIN_WIDTH, CELL_HEIGHT));
-				label.setMaximumSize(new Dimension(PANEL_MIN_WIDTH, CELL_HEIGHT));
 				left.add(label);
-				System.out.println("label added");
 			}
 		}
 		
 		JPanel middle = new JPanel();
-		middle.setPreferredSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
+		middle.setSize(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber);
 		middle.setMinimumSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		middle.setMaximumSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
+		middle.setBackground(Color.WHITE);
 		
 		JPanel midTop = new JPanel();
 		midTop.setLayout(new BoxLayout(midTop, BoxLayout.X_AXIS));
+		midTop.setBackground(Color.WHITE);
 		//midTop.add(textArea);
 		JLabel sunLabel = new JLabel("SUN");
 		sunLabel.setSize(CELL_WIDTH, CELL_HEIGHT);
 		sunLabel.setMinimumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
 		
 		midTop.add(new JLabel("SUN"));
+		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("MON"));
+		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("TUE"));
+		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("WED"));
+		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("THU"));
+		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("FRI"));
+		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("SAT"));
 		
 		JPanel midBot = new JPanel();
 		midBot.add(new CalendarGUI());
-
+		midBot.setBackground(Color.WHITE);
+		
 		middle.add(midTop);
 		middle.add(midBot);
 		
 		JPanel right = new JPanel();
-		right.setPreferredSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
+		right.setSize(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber);
 		right.setMinimumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		right.setMaximumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
+		right.setBackground(Color.WHITE);
 		
 		JButton classButton = new JButton("CLASS");
 		classButton.setBackground(Color.RED);
@@ -139,14 +146,21 @@ public class ScheduleGUI extends JPanel{
             }
         });      
 		
-		
+		right.add(Box.createRigidArea(new Dimension(0, right.getHeight() / 2 - 80)));
 		right.add(classButton);
+		right.add(Box.createRigidArea(new Dimension(0, 10)));
 		right.add(workButton);
+		right.add(Box.createRigidArea(new Dimension(0, 10)));
 		right.add(busyButton);
+		right.add(Box.createRigidArea(new Dimension(0, 10)));
 		right.add(freeButton);
 
 		addMouseListener(new MouseHandler(this));
 
+		this.setSize(PANEL_MIN_WIDTH * 2 + middle.getWidth(), HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber);
+		this.setMinimumSize(new Dimension(PANEL_MIN_WIDTH * 2 + middle.getWidth(), HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
+		this.setMaximumSize(new Dimension(PANEL_MIN_WIDTH * 2 + middle.getWidth(), HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
+		
 		add(left);
 		add(middle);
 		add(right);
@@ -207,20 +221,12 @@ public class ScheduleGUI extends JPanel{
 			
 			Point point = event.getPoint();
 			
-			System.out.println("GUI width: " + scheduleGUI.getWidth());
-			
-			System.out.println("point.x: " + point.x + "\npoint.y: " + point.y);
-			
 			double xStart = (scheduleGUI.getWidth() / 2.0) - (DAYS_IN_WEEK * CELL_WIDTH / 2.0);
-			
-			System.out.println("xStart: " + xStart);
 			
 			if (point.x < xStart || point.y < hardCodedNumber)
 				return;
 			
 			double xDistance = point.x - xStart;
-			
-			System.out.println("xDistance: " + xDistance);
 			
 			/* Determining the cell clicked */
 			int rowIndex = (int) ((point.y - hardCodedNumber) / CELL_HEIGHT);
@@ -249,8 +255,9 @@ public class ScheduleGUI extends JPanel{
 		return grid;
 	}
 	
+	/* delete this method */
 	public static void createAndDisplayGUI(Calendar calendar){
-		ScheduleGUI scheduleGUI = new ScheduleGUI();
+		ScheduleGUI scheduleGUI = new ScheduleGUI("Dan");
 		
 		JFrame frame = new JFrame("Calendar");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
