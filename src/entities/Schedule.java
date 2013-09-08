@@ -151,7 +151,11 @@ public class Schedule implements Serializable{
 		return times;
 	}
 
-	
+	/**
+	 * returns a version of the current schedule into an array of strings of [weekday][interval]
+	 * with each cell presenting a Time block with event name and color for the GUI
+	 * @return an array of strings for the GUI
+	 */
 	public String[][] scheduleToGUI() {
 		String[][] strSched = new String[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
 		for (int wk = 0; wk < Time.DAYS_A_WEEK; wk++) {

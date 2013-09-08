@@ -1,14 +1,8 @@
 package midend;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-
 import comparison.scheduleComparison;
 import data.Time;
 import entities.Entity;
@@ -20,7 +14,7 @@ public class MidEndFormatting {
 	 * returns a formatted String, which contains all the free people for a given time.
 	 * @param Entity Group eg
 	 * @param Time t
-	 * @return Schedule
+	 * @return String
 	 */
 	public static String freePeople(EntityGroup eg, Time t){
 		String toReturn = "<html>";
@@ -51,7 +45,7 @@ public class MidEndFormatting {
 	 * returns a formatted String, which contains all the free people for a given time.
 	 * @param Entity Group eg
 	 * @param Time t
-	 * @return Schedule
+	 * @return String
 	 */
 	public static String busyPeople(EntityGroup eg, Time t){
 		String toReturn = "<html>";
@@ -82,6 +76,13 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 
+	/**
+	 * returns a formatted String, which contains all the open buildings of a given "identifier".
+	 * @param EntityGroup buildings
+	 * @param Time t
+	 * @param String type
+	 * @return String
+	 */
 	public static String openBuildings(EntityGroup buildings, Time t, String type){
 		String toReturn = "<html>";
 		
@@ -110,6 +111,10 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 	
+	/**
+	 * returns a Time object which contains the current system time.
+	 * @return toReturn
+	 */
 	public static Time systemTime(){
 		Time toReturn = new Time();
 		
@@ -121,13 +126,12 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 	
+	/**
+	 * returns an array of strings, which contains the list of Entity groups on the file.
+	 * @return toReturn
+	 */
 	public static String[] listOfEntityGroups(){
 		File f = new File("EntityGroups");
-		return f.list();
-	}
-	
-	public static String[] listOfEntites(){
-		File f = new File("Entities");
 		return f.list();
 	}
 

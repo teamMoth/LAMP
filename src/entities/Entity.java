@@ -1,9 +1,11 @@
 package entities;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
+import data.ReadAndWrite;
 import data.Time;
 
 /**
@@ -16,9 +18,13 @@ import data.Time;
 public class Entity implements Serializable {
 
 	private static final long serialVersionUID = -6326844684848713032L;
+	//The entity's schedule
 	private Schedule entitySchedule;
+	//A list of tags characterizing the entity
 	private ArrayList<String> tags;
+	//Name of the entity
 	private String name;
+	//Entity's unique ID
 	private String ID;
 
 	/**
@@ -27,9 +33,31 @@ public class Entity implements Serializable {
 	public Entity() {
 		entitySchedule = new Schedule();
 		tags = new ArrayList<String>();
-		ID = String.valueOf(Integer.toHexString(this.hashCode()).toString()
-				.substring(4, 8));
 	}
+	
+
+/**
+ * If entity exists, read from file, if not, create new Entity with name ID
+ * @param ID name of new Entity
+ */
+	public Entity(String ID) {
+		try {
+			ReadAndWrite.readEntityFromFile(ID);
+		} catch (FileNotFoundException e) {
+			new Entity();
+			setName(ID);
+		}
+	}
+
+	/**
+	 * set name and ID of entity to parameter name 
+	 * @param name name to set entity name
+	 */
+	private void setName(String name) {
+		this.name = name;		
+		this.ID = name;
+	}
+
 
 	/**
 	 * Adds the parameter "tag" to the entity's list of tags
@@ -125,6 +153,11 @@ public class Entity implements Serializable {
 		entitySchedule = new Schedule(strSched); 
 	}
 	
+	/**
+	 * returns a version of the current schedule into an array of strings of [weekday][interval]
+	 * with each cell presenting a Time block with event name and color for the GUI
+	 * @return an array of strings for the GUI
+	 */
 	public String[][] scheduleToGUI() {
 		return entitySchedule.scheduleToGUI();
 	}
