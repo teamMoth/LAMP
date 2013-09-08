@@ -1,7 +1,9 @@
 package model;
 
+import java.io.Serializable;
 
-public class Calendar {
+
+public class Calendar implements Serializable{
 	public TimeSlot[][] schedule;
 	
 	public Calendar(int maxRows, int maxCols){

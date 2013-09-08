@@ -1,9 +1,11 @@
 package model;
 
 import java.awt.*;
+import java.io.Serializable;
+
 import javax.swing.JLabel;
 
-public class TimeSlot {
+public class TimeSlot implements Serializable{
 	
 	private String name;
 	private Color color;
