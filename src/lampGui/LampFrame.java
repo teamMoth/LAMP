@@ -140,8 +140,8 @@ public class LampFrame extends JFrame{
 		buildingPanel.add(Box.createRigidArea(new Dimension(15,0)));
 		buildingPanel.add(displayHelp);
 		sideBySide.add(displayFree);
-		Dimension minSize = new Dimension(25, 100);
-		Dimension prefSize = new Dimension(25, 100);
+		Dimension minSize = new Dimension(30, 100);
+		Dimension prefSize = new Dimension(30, 100);
 		Dimension maxSize = new Dimension(Short.MAX_VALUE, 1000);
 		sideBySide.add(new Box.Filler(minSize, prefSize, maxSize));
 		sideBySide.add(displayBusy);
