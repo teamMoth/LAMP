@@ -5,6 +5,9 @@ import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
 import aurelienribon.slidinglayout.SLPanel;
 import aurelienribon.slidinglayout.SLSide;
+import gui.MainGUI;
+import gui.ScheduleGUI;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,6 +33,7 @@ import midend.Database;
 
 public class LampFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
+	// instantiates animation panels
 	private final SLPanel panel = new SLPanel();
 	private final LampPanel p1 = new LampPanel("Home", 0xFFFFFF,0x000000,0x000000);
 	private final LampPanel p2 = new LampPanel("Add schedule", 0xFFFFFF,0x000000,0xB0171F);
@@ -37,9 +41,15 @@ public class LampFrame extends JFrame{
 	private final SLConfig mainCfg, p1Cfg, p2Cfg;
 	private Database database;
 	private String modifyName;
+	private ScheduleGUI mySchedule;
 	String dayOfWeek,timeOfDay;
 	Icon icon = createImageIcon("images/lamp_small.png","logo");
-
+	
+	/**
+	 * The big worker class for LAMP is LampFrame, which displays GUI components and listeners
+	 * @param String groupName: name of the initial group requested by user
+	 * @param Database someBase
+	 */
 	public LampFrame(String groupName, Database someBase){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("List All My Possibilities");
@@ -50,22 +60,26 @@ public class LampFrame extends JFrame{
 		database.changeEntityGroup(groupName);
 		p1.setAction(menuAction);
 		
-		JButton setTimeToCurrent = new JButton("See what's up right now");
-		JButton newTime = new JButton("Select a different time");
-		JButton addSchedule = new JButton("Enter a schedule");
-		JButton editSchedule = new JButton("Modify a schedule");
-		JButton switchGroupButton = new JButton("Switch group");
-		JButton backToMenu = new JButton("Submit");
-		JButton aboutButton = new JButton("About");
-		JPanel titlePanel = new JPanel();
-		JPanel display = new JPanel();
-		JPanel buildingPanel = new JPanel();
-		JPanel sideBySide = new JPanel();
-		display.setBackground(Color.BLACK);
-		sideBySide.setBackground(Color.BLACK);
-		//sideBySide.setBackground(Color.decode("0xFF7256"));
+		//creates JButtons
+		final JButton setTimeToCurrent = new JButton("See what's up right now");
+		final JButton newTime = new JButton("Select a different time");
+		final JButton addSchedule = new JButton("Add a person");
+		final JButton editSchedule = new JButton("Modify a schedule");
+		final JButton switchGroupButton = new JButton("Switch group");
+		final JButton backToMenu = new JButton("Submit");
+		final JButton aboutButton = new JButton("About");
 		
-		display.setLayout(new BoxLayout(display, BoxLayout.PAGE_AXIS));
+		//colors JButtons
+		setTimeToCurrent.setBackground(Color.YELLOW);
+		newTime.setBackground(Color.YELLOW);
+		addSchedule.setBackground(Color.YELLOW);
+		editSchedule.setBackground(Color.YELLOW);
+		switchGroupButton.setBackground(Color.YELLOW);
+		backToMenu.setBackground(Color.BLACK);
+		backToMenu.setForeground(Color.WHITE);
+		aboutButton.setBackground(Color.YELLOW);
+		
+		//creates JLabels
 		final JLabel title = new JLabel();
 		final JLabel displayFree = new JLabel();
 		final JLabel displayBusy = new JLabel();
@@ -73,6 +87,24 @@ public class LampFrame extends JFrame{
 		final JLabel displayRec = new JLabel();
 		final JLabel displayHelp = new JLabel();
 		
+		//creates JPanels
+		JPanel titlePanel = new JPanel();
+		JPanel display = new JPanel();
+		JPanel buildingPanel = new JPanel();
+		JPanel sideBySide = new JPanel();
+		
+		//sets Backgrounds of Jpanels
+		display.setBackground(Color.BLACK);
+		sideBySide.setBackground(Color.BLACK);
+		titlePanel.setBackground(Color.BLACK);
+		buildingPanel.setBackground(Color.BLACK);
+		
+		//sets Layouts of Jpanels
+		display.setLayout(new BoxLayout(display, BoxLayout.PAGE_AXIS));
+		buildingPanel.setLayout(new BoxLayout(buildingPanel, BoxLayout.X_AXIS));
+		sideBySide.setLayout(new BoxLayout(sideBySide, BoxLayout.X_AXIS));
+		
+		// adds default text to interface
 		title.setHorizontalAlignment(SwingConstants.LEFT);
 		title.setText("What is happening right now?");
 		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
@@ -81,48 +113,49 @@ public class LampFrame extends JFrame{
 		displayRec.setText("<html>McKeldin<br>Epply<br>Tennis courts</html>");
 		displayHelp.setText("<html>University Health Center<br>Help Center<br>Help tutoring</html>");
 		
+		//sets formatting for all JLabels
 		title.setFont(new Font("Serif", Font.PLAIN, 36));
 		title.setForeground(new Color(0xFFFFFF));
-		
-		titlePanel.setBackground(Color.BLACK);
-		titlePanel.add(title);
-		buildingPanel.setBackground(Color.BLACK);
-		buildingPanel.setLayout(new BoxLayout(buildingPanel, BoxLayout.X_AXIS));
-		buildingPanel.add(displayEateries);
-		buildingPanel.add(displayRec);
-		buildingPanel.add(displayHelp);
-		
 		displayFree.setForeground(new Color(0xFFFFFF));
 		displayBusy.setForeground(new Color(0xFFFFFF));
 		displayEateries.setForeground(new Color(0xFFFFFF));
 		displayRec.setForeground(new Color(0xFFFFFF));
 		displayHelp.setForeground(new Color(0xFFFFFF));
 		
+		//sets alignment for JLabels
 		displayFree.setVerticalAlignment(SwingConstants.TOP);
 		displayBusy.setVerticalAlignment(SwingConstants.TOP);
 		displayFree.setAlignmentY(0);
 		displayBusy.setAlignmentY(0);
 		
-		sideBySide.setLayout(new BoxLayout(sideBySide, BoxLayout.X_AXIS));
+		//adding labels to JPanels
+		titlePanel.add(title);
+		buildingPanel.add(displayEateries);
+		buildingPanel.add(displayRec);
+		buildingPanel.add(displayHelp);
 		sideBySide.add(displayFree);
 		Dimension minSize = new Dimension(25, 100);
 		Dimension prefSize = new Dimension(25, 100);
 		Dimension maxSize = new Dimension(Short.MAX_VALUE, 1000);
 		sideBySide.add(new Box.Filler(minSize, prefSize, maxSize));
 		sideBySide.add(displayBusy);
-		
+		//after consolidating some JPanels, organizes those into a larger JPanel
 		display.add(titlePanel);
 		display.add(sideBySide);
 		display.add(buildingPanel);
 		
-		setTimeToCurrent.setBackground(Color.YELLOW);
-		newTime.setBackground(Color.YELLOW);
-		addSchedule.setBackground(Color.YELLOW);
-		editSchedule.setBackground(Color.YELLOW);
-		switchGroupButton.setBackground(Color.YELLOW);
-		backToMenu.setBackground(Color.BLACK);
-		aboutButton.setBackground(Color.YELLOW);
+		//adds consolidated JPanels to final JLabel
+		p1.setBackground(Color.BLACK);
+		p1.add(display);
+		p2.setBackground(Color.RED);
+		p2.add(setTimeToCurrent);
+		p2.add(newTime);
+		p2.add(addSchedule);
+		p2.add(editSchedule);
+		p2.add(switchGroupButton);
+		p2.add(aboutButton);
 		
+		//defines ActionListeners for each button
 		newTime.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				Object[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -164,8 +197,6 @@ public class LampFrame extends JFrame{
 				JOptionPane.showMessageDialog(p2,"Created by teamMoth at daemondash2013", "About",JOptionPane.PLAIN_MESSAGE,icon);
 			}
 		});
-		
-		
 		addSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 					modifyName = (String)JOptionPane.showInputDialog(
@@ -174,6 +205,14 @@ public class LampFrame extends JFrame{
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null, null,
 		                    "Bob Lamp");
+					p3.removeAll();
+					mySchedule = new ScheduleGUI(modifyName);
+					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
+					p3.add(Box.createRigidArea(new Dimension(0,15)));
+					p3.add(mySchedule);
+					backToMenu.setAlignmentX(Box.CENTER_ALIGNMENT);
+					p3.add(Box.createRigidArea(new Dimension(0,10)));
+					p3.add(backToMenu);
         			calendarAction.run();
 			}
 		});
@@ -185,6 +224,14 @@ public class LampFrame extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null, null,
 	                    "Bob Lamp");
+					p3.removeAll();
+					mySchedule = new ScheduleGUI(modifyName);
+					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
+					p3.add(Box.createRigidArea(new Dimension(0,15)));
+					p3.add(mySchedule);
+					backToMenu.setAlignmentX(Box.CENTER_ALIGNMENT);
+					p3.add(Box.createRigidArea(new Dimension(0,10)));
+					p3.add(backToMenu);
         			calendarAction.run();
 			}
 		});
@@ -207,33 +254,23 @@ public class LampFrame extends JFrame{
 		});
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-					endCalendarAction.run();
+				database.changeEntitySchedule(modifyName, mySchedule.getSchedule());
+				endCalendarAction.run();
 			}
 		});
-		
-
         new Timer(120000, new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
-        		title.setText("What is happening right now?");
-            	// set to current time
+            	title.setText("What is happening right now?");
+				displayFree.setText(database.freeNow());
+				displayBusy.setText(database.busyNow());
+				Time current = database.getCurrentTime();
+				displayEateries.setText(database.openEateries(current));
+				displayRec.setText(database.openREC(current));
+				displayHelp.setText(database.openHelp(current));
             }
         }).start();
-		
-		p1.setBackground(Color.BLACK);
-		p1.add(display);
-		p2.setBackground(Color.RED);
-		p2.add(setTimeToCurrent);
-		p2.add(newTime);
-		p2.add(addSchedule);
-		p2.add(editSchedule);
-		p2.add(switchGroupButton);
-		p2.add(aboutButton);
-		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
-		p3.add(Box.createVerticalGlue());
-		backToMenu.setAlignmentX(Box.CENTER_ALIGNMENT);
-		p3.add(backToMenu);
-		
-	
+
+	//define configurations for animation
 	mainCfg = new SLConfig(panel)
 		.row(1f).col(1f)
 		.place(0, 0, p1);
@@ -247,6 +284,7 @@ public class LampFrame extends JFrame{
 		.row(1f).col(1f)
 		.place(0, 0, p3);
 	
+	//finally start animation
 	panel.setTweenManager(SLAnimator.createTweenManager());
 	panel.initialize(mainCfg);
 
@@ -324,8 +362,4 @@ public class LampFrame extends JFrame{
 			return null;
 		}
 	}
-	public String getName(){
-		return modifyName;
-	}
-
 }
