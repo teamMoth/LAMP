@@ -106,11 +106,11 @@ public class LampFrame extends JFrame{
 		// adds default text to interface
 		title.setHorizontalAlignment(SwingConstants.LEFT);
 		title.setText("What is happening right now?");
-		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
+		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin is free<br>McKeldin is free<br>Jimmah is free<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
 		displayBusy.setText("Jane will next be available never and woah its late");
-		displayEateries.setText("<html>McKeldin<br>South Campus Diner</html>");
-		displayRec.setText("<html>McKeldin<br>Epply<br>Tennis courts</html>");
-		displayHelp.setText("<html>University Health Center<br>Help Center<br>Help tutoring</html>");
+		displayEateries.setText("<html><u>Open Diners:</u><br>McKeldin<br>South Campus Diner</html>");
+		displayRec.setText("<html><u>Rec Locations:</u><br>McKeldin<br>Epply<br>Tennis courts</html>");
+		displayHelp.setText("<html><u>Helpful places:</u><br>University Health Center<br>Help Center<br>Help tutoring</html>");
 		
 		//sets formatting for all JLabels
 		title.setFont(new Font("Serif", Font.PLAIN, 36));
@@ -120,6 +120,11 @@ public class LampFrame extends JFrame{
 		displayEateries.setForeground(new Color(0xFFFFFF));
 		displayRec.setForeground(new Color(0xFFFFFF));
 		displayHelp.setForeground(new Color(0xFFFFFF));
+		displayFree.setFont(new Font("SansSerif", Font.PLAIN,16));
+		displayBusy.setFont(new Font("SansSerif", Font.PLAIN,16));
+		displayEateries.setFont(new Font("SansSerif", Font.PLAIN,16));
+		displayRec.setFont(new Font("SansSerif", Font.PLAIN,16));
+		displayHelp.setFont(new Font("SansSerif", Font.PLAIN,16));
 		
 		//sets alignment for JLabels
 		displayFree.setVerticalAlignment(SwingConstants.TOP);
@@ -171,12 +176,14 @@ public class LampFrame extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null, null,
 	                    "3:00 pm");
-				title.setText("What is happening on " + dayOfWeek + " at " + timeOfDay + "?");
-				displayFree.setText(database.freeDuring(new Time(dayOfWeek,timeOfDay)));
-				displayBusy.setText(database.busyDuring(new Time(dayOfWeek,timeOfDay)));
-				displayEateries.setText(database.openEateries(new Time(dayOfWeek,timeOfDay)));
-				displayRec.setText(database.openREC(new Time(dayOfWeek,timeOfDay)));
-				displayHelp.setText(database.openHelp(new Time(dayOfWeek,timeOfDay)));
+				if ((dayOfWeek != null) && (timeOfDay !=null)){
+					title.setText("What is happening on " + dayOfWeek + " at " + timeOfDay + "?");
+					displayFree.setText(database.freeDuring(new Time(dayOfWeek,timeOfDay)));
+					displayBusy.setText(database.busyDuring(new Time(dayOfWeek,timeOfDay)));
+					displayEateries.setText(database.openEateries(new Time(dayOfWeek,timeOfDay)));
+					displayRec.setText(database.openREC(new Time(dayOfWeek,timeOfDay)));
+					displayHelp.setText(database.openHelp(new Time(dayOfWeek,timeOfDay)));
+				}
 				}
 		});
 		setTimeToCurrent.addActionListener(new ActionListener(){
@@ -204,6 +211,7 @@ public class LampFrame extends JFrame{
 		                    JOptionPane.PLAIN_MESSAGE,
 		                    null, null,
 		                    "Bob Lamp");
+					if (modifyName != null){
 					p3.removeAll();
 					mySchedule = new ScheduleGUI(modifyName, null);
 					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
@@ -213,6 +221,7 @@ public class LampFrame extends JFrame{
 					p3.add(Box.createRigidArea(new Dimension(0,10)));
 					p3.add(backToMenu);
         			calendarAction.run();
+					}
 			}
 		});
 		editSchedule.addActionListener(new ActionListener() {
@@ -223,6 +232,7 @@ public class LampFrame extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null, null,
 	                    "Bob Lamp");
+				if (modifyName != null){
 					p3.removeAll();
 					mySchedule = new ScheduleGUI(modifyName, database.getEntitySchedule(modifyName));
 					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
@@ -232,16 +242,19 @@ public class LampFrame extends JFrame{
 					p3.add(Box.createRigidArea(new Dimension(0,10)));
 					p3.add(backToMenu);
         			calendarAction.run();
+				}
 			}
 		});
 		switchGroupButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				database.changeEntityGroup((String)JOptionPane.showInputDialog(
+				String newGroup = ((String)JOptionPane.showInputDialog(
 	                    p1, "What group are you interested in?",
 	                    "Customized Dialog",
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null, null,
 	                    "Bob Lamp"));
+				if (newGroup != null){
+				database.changeEntityGroup(newGroup);
 				title.setText("What is happening right now?");
 				displayFree.setText(database.freeNow());
 				displayBusy.setText(database.busyNow());
@@ -249,6 +262,7 @@ public class LampFrame extends JFrame{
 				displayEateries.setText(database.openEateries(current));
 				displayRec.setText(database.openREC(current));
 				displayHelp.setText(database.openHelp(current));
+				}
 			}
 		});
 		backToMenu.addActionListener(new ActionListener() {

@@ -36,21 +36,33 @@ public class LAMP{
 		
 		// opens frame depending on what group you want information about
 		if (MidEndFormatting.listOfEntityGroups().length > 1){
-			frame = new LampFrame((String)JOptionPane.showInputDialog(
-                    frame, "Which group are you looking for?",
-                    "Customized Dialog",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null, MidEndFormatting.listOfEntityGroups(), ""),database);
+			String initialGroup;
+			do{
+			initialGroup = ((String)JOptionPane.showInputDialog(
+	                    frame, "What should the group of people you want to organize be called?",
+	                    "Customized Dialog",
+	                    JOptionPane.PLAIN_MESSAGE,
+	                    null, MidEndFormatting.listOfEntityGroups(), ""));
+			if (initialGroup == null)
+					System.exit(0);
+			}while (initialGroup.equals(""));
+			frame = new LampFrame(initialGroup,database);
 		}
 		else if (MidEndFormatting.listOfEntityGroups().length == 1){
 			frame = new LampFrame(MidEndFormatting.listOfEntityGroups()[0],database);
 		}
 		else{
-			frame = new LampFrame((String)JOptionPane.showInputDialog(
-                    frame, "What should the group of people you want to organize be called?",
+			String initialGroup;
+			do{
+			initialGroup = ((String)JOptionPane.showInputDialog(
+                    frame, "What's the name of your group?",
                     "Customized Dialog",
                     JOptionPane.PLAIN_MESSAGE,
-                    null, null, ""),database);
+                    null, null, ""));
+			if (initialGroup == null)
+				System.exit(0);
+			}while (initialGroup.equals(""));
+			frame = new LampFrame(initialGroup,database);
 		}
 		
 		frame.setSize(900, 700);
