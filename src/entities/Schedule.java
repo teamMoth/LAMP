@@ -6,8 +6,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import data.Time;
-import exceptions.InvalidEventException;
 
+/**
+ * An arraylist of events and time array representing when an entity is available
+ * @author ganc
+ *
+ */
 public class Schedule implements Serializable{
 
 	private static final long serialVersionUID = 5581511733693556836L;
@@ -113,38 +117,4 @@ public class Schedule implements Serializable{
 		return times;
 	}
 
-	/**
-	 * Refresh the timeArray based off the eventList
-	 */
-	private void updateTimeArray() {
-		clearTimeArray();
-		for (TimeEvent event : eventList) {
-			addEvent(event);
-		}
-	}
-	
-	/**
-	 * Clears the timeArray
-	 */
-	private void clearTimeArray(){
-		for (int i = 0; i < timeArray.length; i++) {
-			for (int j = 0; j < timeArray[i].length; j++) {
-				timeArray[i][j] = null;
-			}
-		}
-	}
-	
-	/**
-	 * Insert an existing event in the timeArray
-	 * @param event TimeEvent to insert
-	 */
-	private void addEvent(TimeEvent event) {
-		Time start = event.getStartTime();
-		Time end = event.getEndTime();
-		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
-			for (int intrvl = start.toInterval(); intrvl < end.toInterval(); intrvl++) {
-				timeArray[wk][intrvl] = event;
-			}
-		}
-	}
 }

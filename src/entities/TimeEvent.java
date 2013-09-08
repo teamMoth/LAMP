@@ -2,6 +2,13 @@ package entities;
 
 import data.Time;
 
+/**
+ * Stores name of the event, start time (first occupied block of time caused by the end) 
+ * and end time (first non-occupied block of time after the event)
+ * 
+ * @author ganc
+ *
+ */
 public class TimeEvent {
 
 	private String name = null;
