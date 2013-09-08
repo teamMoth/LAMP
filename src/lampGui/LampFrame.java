@@ -106,9 +106,9 @@ public class LampFrame extends JFrame{
 		// adds default text to interface
 		title.setHorizontalAlignment(SwingConstants.LEFT);
 		title.setText("What is happening right now?");
-		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin is free<br>McKeldin is free<br>Jimmah is free<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
-		displayBusy.setText("Jane will next be available never and woah its late");
-		displayEateries.setText("<html><u>Open Diners:</u><br>McKeldin<br>South Campus Diner</html>");
+		displayFree.setText("<html>Bob is free<br>Nate is free<br>Chris is free<br>Cindy is free<br>Joe is free<br>Mike is free<br><br></html>");
+		displayBusy.setText("<html>Jane is busy with work and will be back at 5pm<br>Tom is busy with class and will be back at 3pm<br>Dan is busy with TF2 and will be back at 7am<br></html>");
+		displayEateries.setText("<html><u>Diners:</u><br>McKeldin<br>South Campus Diner</html>");
 		displayRec.setText("<html><u>Rec Locations:</u><br>McKeldin<br>Epply<br>Tennis courts</html>");
 		displayHelp.setText("<html><u>Helpful places:</u><br>University Health Center<br>Help Center<br>Help tutoring</html>");
 		
@@ -135,7 +135,9 @@ public class LampFrame extends JFrame{
 		//adding labels to JPanels
 		titlePanel.add(title);
 		buildingPanel.add(displayEateries);
+		buildingPanel.add(Box.createRigidArea(new Dimension(15,0)));
 		buildingPanel.add(displayRec);
+		buildingPanel.add(Box.createRigidArea(new Dimension(15,0)));
 		buildingPanel.add(displayHelp);
 		sideBySide.add(displayFree);
 		Dimension minSize = new Dimension(25, 100);

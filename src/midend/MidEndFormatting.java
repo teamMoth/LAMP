@@ -69,7 +69,7 @@ public class MidEndFormatting {
 		}
 		
 		for (Entity e : eg3.getEntities()){
-			toReturn += e.getName() + " is busy doing " + e.getEventAtTime(t) + " and will be free at " + e.nextFree(t) + "<br>";
+			toReturn += e.getName() + " is busy with " + e.getEventAtTime(t) + " and will be free at " + e.nextFree(t) + "<br>";
 		}
 		
 		toReturn += "</html>";
@@ -89,7 +89,15 @@ public class MidEndFormatting {
 		scheduleComparison sc = new scheduleComparison(buildings);
 		EntityGroup buildings2 = sc.freeMembers(t);
 		
-		
+		if (type.equalsIgnoreCase("help")){
+			toReturn += "<u>Helpful places:</u><br>";
+		}
+		else if(type.equalsIgnoreCase("rec")){
+			toReturn += "<u>Rec Locations:</u><br>";
+		}
+		else{
+			toReturn += "<u>Diners:</u><br>";
+		}
 		for (Entity e:buildings2.getEntities()){
 			ArrayList<String> tags = e.getTags();
 			boolean building = false;
