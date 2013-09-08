@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import comparison.scheduleComparison;
-
 import data.ReadAndWrite;
 import data.Time;
 import entities.Entity;
@@ -168,6 +167,7 @@ public class Database{
 		Entity entToChange = null;
 		try {
 			entToChange = ReadAndWrite.readEntityFromFile(entityID);
+			System.out.println(entToChange.getSchedule());
 		}
 		catch (IOException e) {
 			entToChange = new Entity();

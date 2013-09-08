@@ -12,7 +12,7 @@ import exceptions.InvalidEventException;
 public class Time implements Serializable{
 
 	private static final long serialVersionUID = -6188245283950867206L;
-	public static final int DAYS_A_WEEK = 6;
+	public static final int DAYS_A_WEEK = 7;
 	public static final int HOURS_A_DAY = 18;
 	//the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
 	public static final int TIME_INTERVAL = 30;
@@ -44,7 +44,9 @@ public class Time implements Serializable{
 	public Time (int weekday, int interval) {
 		int hour = (interval * Time.TIME_INTERVAL) / 60;
 		int minute = (interval * Time.TIME_INTERVAL) % 60;
-		new Time(weekday, hour, minute);
+		setWeekday(weekday);
+		setHour(hour);
+		setMinute(minute);
 	}
 
 	/**

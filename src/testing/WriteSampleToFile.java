@@ -4,11 +4,10 @@ import java.io.IOException;
 
 import data.ReadAndWrite;
 import data.Time;
-
 import midend.Database;
-
 import entities.Entity;
 import entities.EntityGroup;
+import entities.TimeEvent;
 
 public class WriteSampleToFile {
 
@@ -31,7 +30,9 @@ public class WriteSampleToFile {
 		catch (IOException e) {
 			entToChange = new Entity();
 		}
-		entToChange.getSchedule().addEvent("Test", new Time(1,8,0), new Time(1,14,0));
+		TimeEvent ev = new TimeEvent("Test", new Time(0,0,0), new Time(0,14,0));
+		ev.addProperty("COLOR", "-1");
+		entToChange.getSchedule().addEvent(ev);
 		
 		try{
 			ReadAndWrite.writeEntityToFile(entToChange);

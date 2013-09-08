@@ -44,26 +44,18 @@ public class Schedule implements Serializable {
 		int startwk = 0, startintrvl = 0;
 		String schedStr = null, prevSchedStr;
 		System.out.println("frmgui1: " + strSched[0][0]);
-		for (int wk = 0; wk < strSched[0].length; wk++) {
-			for (int intrvl = 0; intrvl < strSched.length; intrvl++) {
-				prevSchedStr = schedStr;
-				schedStr = strSched[intrvl][wk];
+		System.out.println(toString(strSched));
 
-				if (!schedStr.equalsIgnoreCase(prevSchedStr) && prevSchedStr != null) {
-					String eventName = prevSchedStr.split(SPLIT_CHAR)[0];
-					if (!eventName.equalsIgnoreCase(FREE_TIME_STRING)) {
-						TimeEvent event = addEvent(eventName, new Time(startwk,
-								startintrvl), new Time(wk, intrvl));
-						event.addProperty("COLOR",
-								schedStr.split(SPLIT_CHAR)[1]);
-					}
-					startwk = wk;
-					startintrvl = intrvl;
+		int day = 0; int interv = 0; boolean cont = false;
+		
+		for(int c = 0; c < strSched[0].length-1; c ++){
+			for(int r = 0; r < strSched.length-1; r ++){
+				if(strSched[r][c].equalsIgnoreCase(strSched[r+1][c])){
+					cont = true;
 				}
-
 			}
 		}
-
+		
 		System.out.println("frmgui2: "
 				+ getEventAtTime(new Time(0, 0)).getName());
 	}
@@ -82,14 +74,26 @@ public class Schedule implements Serializable {
 	public TimeEvent addEvent(String eventName, Time start, Time end) {
 		TimeEvent event = new TimeEvent(eventName, start, end);
 		eventList.add(event);
-		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
-			for (int intrvl = start.toInterval(); intrvl <= end.toInterval(); intrvl++) {
+		for (int wk = start.getWeekday(); wk <= end.getWeekday(); wk++) {
+			for (int intrvl = start.toInterval(); intrvl < end.toInterval(); intrvl++) {
 				timeArray[wk][intrvl] = event;
 			}
 		}
 		return event;
 	}
 
+	public TimeEvent addEvent(TimeEvent event) {
+		eventList.add(event);
+		Time start = event.getStartTime();
+		Time end = event.getEndTime();
+		for (int wk = start.getWeekday(); wk <= end.getWeekday(); wk++) {
+			for (int intrvl = start.toInterval(); intrvl < end.toInterval(); intrvl++) {
+				timeArray[wk][intrvl] = event;
+			}
+		}
+		return event;
+	}
+	
 	/**
 	 * Returns the TimeEvent that occurs at Time t
 	 * 
@@ -188,7 +192,19 @@ public class Schedule implements Serializable {
 			}
 		}
 		System.out.println("!" + strSched[0][0]);
+		System.out.println(toString(strSched));
 		return strSched;
 	}
 
+	
+	public String toString(String[][] arr) {
+		String str = "";
+		for (int i = 0; i < arr.length; i++) {
+			for (int j =0; j < arr[i].length; j++) {
+				str += arr[i][j] + "\t";
+			}
+			str += "\n";
+		}
+		return str;
+	}
 }
