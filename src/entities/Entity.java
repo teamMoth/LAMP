@@ -1,9 +1,11 @@
 package entities;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
+import data.ReadAndWrite;
 import data.Time;
 
 /**
@@ -31,9 +33,31 @@ public class Entity implements Serializable {
 	public Entity() {
 		entitySchedule = new Schedule();
 		tags = new ArrayList<String>();
-		ID = String.valueOf(Integer.toHexString(this.hashCode()).toString()
-				.substring(4, 8));
 	}
+	
+
+/**
+ * If entity exists, read from file, if not, create new Entity with name ID
+ * @param ID name of new Entity
+ */
+	public Entity(String ID) {
+		try {
+			ReadAndWrite.readEntityFromFile(ID);
+		} catch (FileNotFoundException e) {
+			new Entity();
+			setName(ID);
+		}
+	}
+
+	/**
+	 * set name and ID of entity to parameter name 
+	 * @param name name to set entity name
+	 */
+	private void setName(String name) {
+		this.name = name;		
+		this.ID = name;
+	}
+
 
 	/**
 	 * Adds the parameter "tag" to the entity's list of tags
