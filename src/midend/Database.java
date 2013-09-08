@@ -145,6 +145,17 @@ public class Database{
 		}
 	}
 	
+	public String[][] getEntitySchedule(String entityID) {
+		Entity ent;
+		try {
+			ent = ReadAndWrite.readEntityFromFile(entityID);
+		}
+		catch (IOException e) {
+			ent = new Entity();
+		}
+		return ent.scheduleToGUI();
+	}
+	
 	/**
 	 * Changes a specific entity's schedule to newSchedule. If the entity is not found on the file system,
 	 * it will create the entity, with the passed Schedule
