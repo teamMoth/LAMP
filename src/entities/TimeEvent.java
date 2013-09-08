@@ -46,4 +46,9 @@ public class TimeEvent {
 	public Time getEndTime() {
 		return endTime;
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 }
