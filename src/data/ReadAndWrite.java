@@ -1,5 +1,6 @@
 package data;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,7 +17,7 @@ public class ReadAndWrite {
 		ObjectOutputStream oos = null;
 		
 		try {
-			fos = new FileOutputStream("Entites/"+ent.getName());
+			fos = new FileOutputStream("Entites"+File.separator+ent.getName());
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(ent);
 			oos.close();
@@ -33,7 +34,7 @@ public class ReadAndWrite {
 		Entity ent = null;
 		
 		try {
-			fis = new FileInputStream("Entites/"+ID);
+			fis = new FileInputStream("Entites"+File.separator+ID);
 			ois = new ObjectInputStream(fis);
 			ent = (Entity) ois.readObject();
 			ois.close();
@@ -52,7 +53,7 @@ public class ReadAndWrite {
 		ObjectOutputStream oos = null;
 		
 		try {
-			fos = new FileOutputStream("EntityGroup/"+entgrp.getName());
+			fos = new FileOutputStream("EntityGroup"+File.separator+entgrp.getName());
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(entgrp);
 			oos.close();
@@ -69,7 +70,7 @@ public class ReadAndWrite {
 		EntityGroup entgrp = null;
 		
 		try {
-			fis = new FileInputStream("EntityGroup/"+ID);
+			fis = new FileInputStream("EntityGroup"+File.separator+ID);
 			ois = new ObjectInputStream(fis);
 			entgrp = (EntityGroup) ois.readObject();
 			ois.close();
