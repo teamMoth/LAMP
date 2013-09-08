@@ -35,7 +35,7 @@ public class EntityGroup {
 	 */
 	public EntityGroup(String name, String ID, ArrayList<Entity> entList) {
 		this.name = name;
-		this.ID = ID;
+		this.ID = name;
 		this.entityList = entList;
 	}
 	

@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,12 @@ import data.Time;
  * @author ganc
  *
  */
-public class TimeEvent {
+public class TimeEvent implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 175872779829265752L;
 	// Name of the event
 	private String name = null;
 	// Collection of properties of the event
