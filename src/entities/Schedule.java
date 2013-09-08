@@ -34,7 +34,7 @@ public class Schedule implements Serializable{
 		TimeEvent event = new TimeEvent(eventName, start, end);
 		eventList.add(event);
 		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
-			for (int intrvl = timeToInterval(start); intrvl < timeToInterval(end); intrvl++) {
+			for (int intrvl = start.toInterval(); intrvl < end.toInterval(); intrvl++) {
 				timeArray[wk][intrvl] = event;
 			}
 		}
@@ -48,7 +48,7 @@ public class Schedule implements Serializable{
 	 */
 	public TimeEvent getEventAtTime(Time t) {
 		int wk = t.getWeekday();
-		int intrvl = timeToInterval(t);
+		int intrvl = t.toInterval();
 		return timeArray[wk][intrvl];
 	}
 
@@ -60,12 +60,12 @@ public class Schedule implements Serializable{
 	public Time nextFree(Time t) {
 		Time nextFreeTime = null;
 		int wk = t.getWeekday();
-		int intrvl = timeToInterval(t);
+		int intrvl = t.toInterval();
 		
 		for (int wkday = wk; wkday < Time.DAYS_A_WEEK; wkday++) {
 			for (int timeChunk = intrvl; timeChunk < INTERVALS_A_DAY; timeChunk++){
 				if (timeArray[wk][timeChunk] == null){
-					nextFreeTime = intervalToTime(wk, timeChunk);
+					nextFreeTime = new Time(wk, timeChunk);
 				}
 			}
 		}
@@ -85,7 +85,7 @@ public class Schedule implements Serializable{
 			for (int intrvl = 0; intrvl < INTERVALS_A_DAY; intrvl++) {
 				TimeEvent event = timeArray[wk][intrvl];
 				if (event == null) {
-					Time t = intervalToTime(wk, intrvl);
+					Time t = new Time(wk, intrvl);
 					times.add(t);
 				}
 			}
@@ -106,41 +106,11 @@ public class Schedule implements Serializable{
 		for (int intrvl = 0; intrvl < INTERVALS_A_DAY; intrvl++) {
 			TimeEvent event = timeArray[wkday][intrvl];
 			if (event == null) {
-				Time t = intervalToTime(wkday, intrvl);
+				Time t = new Time(wkday, intrvl);
 				times.add(t);
 			}
 		}
 		return times;
-	}
-
-	/**
-	 * returns int corresponding to the interval that is Time t
-	 * 
-	 * @param t
-	 *            Time to be converted into interval
-	 * @return interval corresponding to Time t
-	 * 
-	 */
-	private int timeToInterval(Time t) {
-		int result = (t.getHour() * 60 + t.getMinute()) / Time.TIME_INTERVAL;
-		return result;
-	}
-
-	/**
-	 * Returns Time object corresponding to the weekday and interval
-	 * 
-	 * @param weekday
-	 *            first Schedule array index, the weekday (0-6)
-	 * @param interval
-	 * @return Time Time object that corresponds to the indices in the Schedule
-	 *         array
-	 * @throws InvalidEventException
-	 *             throws if invalid times given
-	 */
-	private Time intervalToTime(int weekday, int interval) {
-		int hour = (interval * Time.TIME_INTERVAL) / 60;
-		int minute = (interval * Time.TIME_INTERVAL) % 60;
-		return new Time(weekday, hour, minute);
 	}
 
 	/**
@@ -172,7 +142,7 @@ public class Schedule implements Serializable{
 		Time start = event.getStartTime();
 		Time end = event.getEndTime();
 		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
-			for (int intrvl = timeToInterval(start); intrvl < timeToInterval(end); intrvl++) {
+			for (int intrvl = start.toInterval(); intrvl < end.toInterval(); intrvl++) {
 				timeArray[wk][intrvl] = event;
 			}
 		}
