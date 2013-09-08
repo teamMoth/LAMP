@@ -28,6 +28,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
+import midend.MidEndFormatting;
+
 public class LampFrame extends JFrame{
 	private final SLPanel panel = new SLPanel();
 	private final LampPanel p1 = new LampPanel("Home", 0xFFFFFF,0x000000,0x000000);
@@ -60,16 +62,16 @@ public class LampFrame extends JFrame{
 		sideBySide.setBackground(Color.BLACK);
 		
 		display.setLayout(new BoxLayout(display, BoxLayout.PAGE_AXIS));
-		JLabel title = new JLabel();
-		JLabel displayFree = new JLabel();
-		JLabel displayBusy = new JLabel();
-		JLabel displayEateries = new JLabel();
-		JLabel displayRec = new JLabel();
-		JLabel displayHelp = new JLabel();
+		final JLabel title = new JLabel();
+		final JLabel displayFree = new JLabel();
+		final JLabel displayBusy = new JLabel();
+		final JLabel displayEateries = new JLabel();
+		final JLabel displayRec = new JLabel();
+		final JLabel displayHelp = new JLabel();
 		
 		title.setHorizontalAlignment(SwingConstants.LEFT);
 		title.setText("What is happening right now?");
-		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
+		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
 		displayBusy.setText("Jane will next be available never and woah its late");
 		displayEateries.setText("<html>McKeldin<br>South Campus Diner</html>");
 		displayRec.setText("<html>McKeldin<br>Epply<br>Tennis courts</html>");
@@ -178,9 +180,9 @@ public class LampFrame extends JFrame{
 		});
 		
 
-        new Timer(500, new ActionListener() {
+        new Timer(120000, new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
-                
+                // set to current time
             }
         }).start();
 		

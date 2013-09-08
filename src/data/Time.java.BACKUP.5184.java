@@ -1,4 +1,51 @@
+<<<<<<< HEAD
+package data;
 
+import java.io.Serializable;
+
+import exceptions.InvalidEventException;
+
+/**
+ * Stores hours and minute values
+ * @author ganc
+ *
+ */
+public class Time implements Serializable{
+
+	private static final long serialVersionUID = -6188245283950867206L;
+	public static final int DAYS_A_WEEK = 7;
+	public static final int HOURS_A_DAY = 24;
+	//the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
+	public static final int TIME_INTERVAL = 15;
+	public static final int START_HOUR = 0;
+	public static final int END_HOUR = START_HOUR + HOURS_A_DAY;
+	private int hour;
+	private int minute;
+	private int weekday;
+	
+	/** 
+	 * Empty constructor for Time
+	 */
+	public Time (){
+	}
+	
+	/**
+	 * Returns Time object corresponding to the weekday and interval
+	 * 
+	 * @param weekday
+	 *            first Schedule array index, the weekday (0-6)
+	 * @param interval
+	 * @return Time Time object that corresponds to the indices in the Schedule
+	 *         array
+	 * @throws InvalidEventException
+	 *             throws if invalid times given
+	 */
+	public Time (int weekday, int interval) {
+		int hour = (interval * Time.TIME_INTERVAL) / 60;
+		int minute = (interval * Time.TIME_INTERVAL) % 60;
+		new Time(weekday, hour, minute);
+	}
+	
 	
 	/**
 	 * Time constructor that stores hours and minutes
@@ -10,60 +57,6 @@
 		setWeekday(weekday);
 		setHour(hours);
 		setMinute(minutes);
-	}
-	
-	/**
-	 * Time constructor that stores hours and minutes from input strings
-	 * @param dayOfWeek
-	 * @param timeOfDay
-	 * @throws InvalidEventException throws if dayOfWeek is not recognized
-	 */
-	public Time(String dayOfWeek, String timeOfDay) throws InvalidEventException, NumberFormatException{
-		if (dayOfWeek.equals("RightNow")){
-			// method to get current time
-		}
-		else{
-			switch (dayOfWeek){
-			case ("Sunday"):
-				weekday = 0;
-				break;
-			case ("Monday"):
-				weekday = 1;
-				break;
-			case ("Tuesday"):
-				weekday = 2;
-				break;
-			case ("Wednesday"):
-				weekday = 3;
-				break;
-			case ("Thursday"):
-				weekday = 4;
-				break;
-			case ("Friday"):
-				weekday = 5;
-				break;
-			case ("Saturday"):
-				weekday = 6;
-				break;
-			default:
-				throw new InvalidEventException();
-			}
-			String[] brokenTime = timeOfDay.split(" ");
-			if (brokenTime[0].contains(":")){
-				String[] hoursMinutes = brokenTime[0].split(":");
-				hour = Integer.parseInt(hoursMinutes[0]);
-				setMinute(Integer.parseInt(hoursMinutes[1]));
-			}
-			else{
-				hour = Integer.parseInt(brokenTime[0]);
-				minute = 0;
-			}
-			if (brokenTime.length > 1){
-				if (brokenTime[1].toLowerCase().trim().equals("pm")){
-					hour = hour + 12;
-				}
-			}
-		}
 	}
 
 	/**
@@ -138,7 +131,7 @@
 	 * changes the stored minute value to parameter
 	 * @param minute the new minute value to be stored
 	 */
-	public void setWeekday(int weekday) {
+	public void setWeekday(int minute) {
 		while (weekday < 0)
 			weekday += DAYS_A_WEEK;
 		
@@ -251,7 +244,7 @@
 	public String toString() {
 		return weekdayNames[this.getWeekday()] + " " + ( this.getHour() % 12 ) + ":" + this.getMinute() + ((this.getHour() / 12 == 0) ? "am" : "pm");
 	}
-	
+
 }
 =======
 package data;
@@ -549,4 +542,5 @@ public class Time implements Serializable{
 
 
 
-
+}
+>>>>>>> 1166655b3016b880178f5052549370f9d4cbc905

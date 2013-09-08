@@ -3,6 +3,8 @@ package midend;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import comparison.scheduleComparison;
@@ -102,18 +104,12 @@ public class MidEndFormatting {
 	static Time systemTime(){
 		Time toReturn = new Time();
 		
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		format.setTimeZone(TimeZone.getTimeZone("GMT"));
-		String time = format.format(java.lang.System.currentTimeMillis());
+		Calendar c = Calendar.getInstance();
+		toReturn.setWeekday(c.get(Calendar.DAY_OF_WEEK));
+		toReturn.setHour(c.get(Calendar.HOUR_OF_DAY));
+		toReturn.setMinute(c.get(Calendar.MINUTE));
 		
-		System.out.println(time);
-		
-		return null;
+		return toReturn;
 	}
-
-	public static void main (String[] args){
-		systemTime();
-	}
-
 
 }
