@@ -29,6 +29,24 @@ public class Time implements Serializable{
 	}
 	
 	/**
+	 * Returns Time object corresponding to the weekday and interval
+	 * 
+	 * @param weekday
+	 *            first Schedule array index, the weekday (0-6)
+	 * @param interval
+	 * @return Time Time object that corresponds to the indices in the Schedule
+	 *         array
+	 * @throws InvalidEventException
+	 *             throws if invalid times given
+	 */
+	public Time (int weekday, int interval) {
+		int hour = (interval * Time.TIME_INTERVAL) / 60;
+		int minute = (interval * Time.TIME_INTERVAL) % 60;
+		new Time(weekday, hour, minute);
+	}
+	
+	
+	/**
 	 * Time constructor that stores hours and minutes
 	 * @param hours
 	 * @param minutes
@@ -205,4 +223,21 @@ public class Time implements Serializable{
 			return new Time(Math.abs(this.getWeekday() - t.getWeekday()),Math.abs(this.getHour() - t.getHour()),Math.abs(this.getMinute() - t.getMinute()));
 		}
 	}
+	
+
+	/**
+	 * returns int corresponding to the interval that is Time t
+	 * 
+	 * @param t
+	 *            Time to be converted into interval
+	 * @return interval corresponding to Time t
+	 * 
+	 */
+	public int toInterval() {
+		int result = (this.getHour() * 60 + this.getMinute()) / Time.TIME_INTERVAL;
+		return result;
+	}
+
+
+
 }

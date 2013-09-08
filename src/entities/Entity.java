@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
+import midend.Database;
 import data.Time;
 
-public class Entity implements Serializable{
+public class Entity implements Serializable {
 
 	private static final long serialVersionUID = -6326844684848713032L;
+	private static String SPLIT_CHAR = ";";
+	private static String FREE_SPACE = "FREE"; 
 	private Schedule entitySchedule;
 	private ArrayList<String> tags;
 	private String name;
@@ -20,7 +23,8 @@ public class Entity implements Serializable{
 	public Entity() {
 		entitySchedule = new Schedule();
 		tags = new ArrayList<String>();
-        ID=String.valueOf(Integer.toHexString(this.hashCode()).toString().substring(4, 8));
+		ID = String.valueOf(Integer.toHexString(this.hashCode()).toString()
+				.substring(4, 8));
 	}
 
 	/**
@@ -46,7 +50,8 @@ public class Entity implements Serializable{
 	 * deletes the tag from the entity's tag list, returns true if the deletion
 	 * actually modified the list.
 	 * 
-	 * @param tag tag to be deleted from tag list
+	 * @param tag
+	 *            tag to be deleted from tag list
 	 * @return if the list was modified by the deletion
 	 */
 	public boolean deleteTag(String tag) {
@@ -64,27 +69,31 @@ public class Entity implements Serializable{
 
 	/**
 	 * returns the name of the entity
+	 * 
 	 * @return name of this entity
 	 */
-	public String getName(){
+	public String getName() {
 		return name;
 	}
-	
+
 	public void clearSchedule() {
 		entitySchedule = new Schedule();
 	}
-	
+
 	/**
 	 * adds an event to this entity's schedule
-	 * @param eventName name of the event to day
-	 * @param startTime starting time of the event to add
-	 * @param endTime ending time of the event to add
+	 * 
+	 * @param eventName
+	 *            name of the event to day
+	 * @param startTime
+	 *            starting time of the event to add
+	 * @param endTime
+	 *            ending time of the event to add
 	 */
 	public void addEvent(String eventName, Time startTime, Time endTime) {
 		entitySchedule.addEvent(eventName, startTime, endTime);
 	}
-	
-	
+
 	/**
 	 * Returns what event the entity has at time t.
 	 * 
@@ -101,21 +110,43 @@ public class Entity implements Serializable{
 	public Set<Time> timesFree() {
 		return entitySchedule.timesFree();
 	}
-	
+
 	/**
 	 * Returns the next free Time for this entity after the Time t given
-	 * @param t starting point of the search for free time
+	 * 
+	 * @param t
+	 *            starting point of the search for free time
 	 * @return next free Time after the Time t given
 	 */
 	public Time nextFree(Time t) {
 		return entitySchedule.nextFree(t);
 	}
-	
+
 	/**
-	 * Returns the Identifier of the Entity Object, to be used for saving purposes.
+	 * Returns the Identifier of the Entity Object, to be used for saving
+	 * purposes.
 	 */
-	public String getID(){
+	public String getID() {
 		return ID;
+	}
+
+	private void scheduleMaker(String[][] strSched) {
+		int startwk = 0, startintrvl = 0;
+		String schedStr = null, prevSchedStr;
+		for (int wk = 0; wk < strSched.length; wk++) {
+			for (int intrvl = 0; intrvl < strSched[wk].length; intrvl++) {
+				prevSchedStr = schedStr;
+				schedStr = strSched[wk][intrvl];
+				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
+					String eventName = schedStr.split(SPLIT_CHAR)[0];
+					if (!eventName.equalsIgnoreCase(FREE_SPACE)) {
+						addEvent(eventName, new Time(startwk, startintrvl),
+								new Time(wk, intrvl - 1));
+					}
+				}
+
+			}
+		}
 	}
 
 }
