@@ -9,6 +9,8 @@ public class EntityGroup {
 	
 	private ArrayList<Entity> entityList;;
 	private String name;
+	private String ID;
+
 	
 	public EntityGroup(){
 		entityList = new ArrayList<Entity>();
@@ -16,6 +18,8 @@ public class EntityGroup {
 	
 	public EntityGroup(String ID) throws FileNotFoundException {
 		EntityGroup newGrp = ReadAndWrite.readEntityGroupFromFile(ID);
+		this.ID = String.valueOf(Integer.toHexString(this.hashCode()).toString()
+				.substring(4, 8));
 		entityList = newGrp.entityList;
 		name = newGrp.name;
 	}
@@ -37,6 +41,10 @@ public class EntityGroup {
 		entityList.remove(ent);
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	/**
 	 * returns the list of entities in the group
 	 * @return list of entities in the group
@@ -49,6 +57,8 @@ public class EntityGroup {
 		return name;
 	}
 	
-	
+	public String getID() {
+		return ID;
+	}
 	
 }

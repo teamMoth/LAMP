@@ -1,11 +1,15 @@
 package data;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 import entities.Entity;
 import entities.EntityGroup;
 
@@ -48,18 +52,23 @@ public class ReadAndWrite {
 	}
 	
 	public static void writeEntityGroupToFile(EntityGroup entgrp) throws FileNotFoundException{
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
+		String name = entgrp.getName();
+		String ID = entgrp.getID();
+		ArrayList<Entity> entlist = entgrp.getEntities();
 		
+		File fin = new File(ID);
 		try {
-			fos = new FileOutputStream("EntityGroup/"+entgrp.getName());
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(entgrp);
-			oos.close();
-		} catch (IOException e) {
-			System.out.println("File Save Failed!");
-			e.printStackTrace();
-			throw new FileNotFoundException();
+			FileWriter fw = new FileWriter(fin);
+			fw.write(name + "\n");
+			fw.write(ID + "\n");
+			for (Entity ent: entlist) {
+				fw.write(ent.getID() + "\n");
+			}
+			fw.flush();
+			fw.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	
