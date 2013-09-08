@@ -14,7 +14,7 @@ public class ReadAndWrite {
 		ObjectOutputStream oos = null;
 		
 		try {
-			fos = new FileOutputStream(ent.getName()+ent.getID());
+			fos = new FileOutputStream(ent.getName());
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(ent);
 			oos.close();
@@ -30,7 +30,7 @@ public class ReadAndWrite {
 		Entity ent = null;
 		
 		try {
-			fis = new FileInputStream(entity.getName()+entity.getID());
+			fis = new FileInputStream(entity.getName());
 			ois = new ObjectInputStream(fis);
 			ent = (Entity) ois.readObject();
 			ois.close();

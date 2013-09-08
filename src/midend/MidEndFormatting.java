@@ -1,8 +1,10 @@
 package midend;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -115,9 +117,9 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 	
-	static String[] listOfDatabases(){
-		
-		return null;
+	public static String[] listOfDatabases(){
+		File f = new File("Databases");
+		return f.list();
 	}
 
 }
