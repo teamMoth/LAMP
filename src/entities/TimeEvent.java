@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import data.Time;
 
 /**
@@ -12,6 +15,7 @@ import data.Time;
 public class TimeEvent {
 
 	private String name = null;
+	private Map<String, String> properties;  
 	private Time startTime;
 	private Time endTime;
 	public TimeEvent() {
@@ -21,6 +25,15 @@ public class TimeEvent {
 		this.name = name;
 		this.startTime = start;
 		this.endTime = end;
+		properties = new HashMap<String, String>();
+	}
+	
+	public void addProperty(String key, String value) {
+		properties.put(key, value);
+	}
+	
+	public String getProperty(String key) {
+		return properties.get(key);
 	}
 	
 	/**

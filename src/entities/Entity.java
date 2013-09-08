@@ -123,7 +123,7 @@ public class Entity implements Serializable {
 	 * with each cell representing a Time block
 	 * @param strSched string representation of the schedule to add to Entity
 	 */
-	public void scheduleMaker(String[][] strSched) {
+	public void scheduleFromGUI(String[][] strSched) {
 		int startwk = 0, startintrvl = 0;
 		String schedStr = null, prevSchedStr;
 		clearSchedule();
@@ -136,8 +136,9 @@ public class Entity implements Serializable {
 				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
 					String eventName = schedStr.split(SPLIT_CHAR)[0];
 					if (!eventName.equalsIgnoreCase(FREE_TIME_STRING)) {
-						addEvent(eventName, new Time(startwk, startintrvl),
+						TimeEvent event = addEvent(eventName, new Time(startwk, startintrvl),
 								new Time(wk, intrvl - 1));
+						event.addProperty("COLOR", schedStr.split(SPLIT_CHAR)[1]);
 						startwk = wk;
 						startintrvl = intrvl;
 					}
@@ -145,6 +146,18 @@ public class Entity implements Serializable {
 
 			}
 		}
+	}
+	
+	public String[][] scheduleToGUI() {
+		String[][] strSched = new String[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
+		for (int wk = 0; wk < Time.DAYS_A_WEEK; wk++) {
+			for (int intrvl = 0; intrvl < Time.INTERVALS_A_DAY; intrvl++) {
+				TimeEvent event = eventAtTime(new Time(wk, intrvl));
+				String str = event.getName() + ";" + event.getProperty("COLOR");
+				strSched[wk][intrvl] = str;
+			}
+		}
+		return strSched;
 	}
 	
 	/**
@@ -164,10 +177,9 @@ public class Entity implements Serializable {
 	 * @param endTime
 	 *            ending time of the event to add
 	 */
-	private void addEvent(String eventName, Time startTime, Time endTime) {
-		entitySchedule.addEvent(eventName, startTime, endTime);
+	private TimeEvent addEvent(String eventName, Time startTime, Time endTime) {
+		return entitySchedule.addEvent(eventName, startTime, endTime);
 	}
-
 
 
 }

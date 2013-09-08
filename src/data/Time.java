@@ -18,6 +18,8 @@ public class Time implements Serializable{
 	public static final int TIME_INTERVAL = 15;
 	public static final int START_HOUR = 0;
 	public static final int END_HOUR = START_HOUR + HOURS_A_DAY;
+	public static final int INTERVALS_A_DAY = (Time.HOURS_A_DAY * 60)
+			/ (Time.TIME_INTERVAL);
 	private int hour;
 	private int minute;
 	private int weekday;
