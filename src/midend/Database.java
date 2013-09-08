@@ -1,6 +1,7 @@
 package midend;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import comparison.scheduleComparison;
 
@@ -53,6 +54,32 @@ public class Database{
 		return output;
 	}
 	
+	public String openEateries(Time t){
+		scheduleComparison sC = new scheduleComparison(grouplist);
+		EntityGroup free = sC.freeMembers(t);
+		String output = MidEndFormatting.openBuildings(free, t, "eateries");
+		return output;
+	}
+	
+	public String openREC(Time t){
+		scheduleComparison sC = new scheduleComparison(grouplist);
+		EntityGroup free = sC.freeMembers(t);
+		String output = MidEndFormatting.openBuildings(free, t, "rec");
+		return output;
+	}
+	
+	public String openHelp(Time t){
+		scheduleComparison sC = new scheduleComparison(grouplist);
+		EntityGroup free = sC.freeMembers(t);
+		String output = MidEndFormatting.openBuildings(free, t, "help");
+		return output;
+	}
+	
+	public String[][] getOpenSchedule(){
+		scheduleComparison Scheduler = new scheduleComparison(grouplist);
+		return Scheduler.freeTimes().scheduleToGUI();
+	}
+	
 	public void changeEntityGroup(String newEntityGroup){
 		try {
 			grouplist = ReadAndWrite.readEntityGroupFromFile(newEntityGroup);
@@ -62,7 +89,7 @@ public class Database{
 		}
 	}
 	
-	public void changeEntitySchedule(String entityID, String[][] newSchedule){
+	public void changeEntitySchedule(String entityID, String[][] newSchedule) throws IOException{
 		Entity entToChange = null;
 		try {
 			entToChange = ReadAndWrite.readEntityFromFile(entityID);
@@ -75,10 +102,14 @@ public class Database{
 		try{
 			ReadAndWrite.writeEntityToFile(entToChange);
 		}
-		catch (FileNotFoundException e){
+		catch (IOException e){
 			System.out.println("Lament! All Progress Missing!");
 			e.printStackTrace();
-			return;
+			throw new IOException();
 		}
+	}
+	
+	public void addEntity(String entityID, String[][] newSchedule, String entityGroup){
+		
 	}
 }
