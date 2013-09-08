@@ -12,7 +12,7 @@ import exceptions.InvalidEventException;
 public class Time implements Serializable{
 
 	private static final long serialVersionUID = -6188245283950867206L;
-	public static final int DAYS_A_WEEK = 7;
+	public static final int DAYS_A_WEEK = 6;
 	public static final int HOURS_A_DAY = 18;
 	//the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
 	public static final int TIME_INTERVAL = 30;
