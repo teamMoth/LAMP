@@ -139,7 +139,7 @@ public class MidEndFormatting {
 	 * @return toReturn
 	 */
 	public static String[] listOfEntityGroups(){
-		File f = new File("EntityGroups");
+		File f = new File("EntityGroup");
 		String[] strArr = f.list();
 		if (strArr == null)
 			strArr = new String[0];

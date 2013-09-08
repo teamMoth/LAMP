@@ -88,13 +88,17 @@ public class LampFrame extends JFrame{
 		
 		//creates JPanels
 		JPanel titlePanel = new JPanel();
+		JPanel banner = new JPanel(new BorderLayout());
 		JPanel display = new JPanel();
 		JPanel buildingPanel = new JPanel();
+		JPanel pictures = new JPanel();
 		JPanel sideBySide = new JPanel();
 		
 		//sets Backgrounds of Jpanels
 		display.setBackground(Color.BLACK);
 		sideBySide.setBackground(Color.BLACK);
+		banner.setBackground(Color.BLACK);
+		pictures.setBackground(Color.BLACK);
 		titlePanel.setBackground(Color.BLACK);
 		buildingPanel.setBackground(Color.BLACK);
 		
@@ -102,10 +106,11 @@ public class LampFrame extends JFrame{
 		display.setLayout(new BoxLayout(display, BoxLayout.PAGE_AXIS));
 		buildingPanel.setLayout(new BoxLayout(buildingPanel, BoxLayout.X_AXIS));
 		sideBySide.setLayout(new BoxLayout(sideBySide, BoxLayout.X_AXIS));
+		pictures.setLayout(new BoxLayout(pictures, BoxLayout.X_AXIS));
 		
 		// adds default text to interface
 		title.setHorizontalAlignment(SwingConstants.LEFT);
-		title.setText("What is happening right now?");
+		title.setText("What's happening right now?");
 		displayFree.setText("<html>Bob is free<br>Nate is free<br>Chris is free<br>Cindy is free<br>Joe is free<br>Mike is free<br><br></html>");
 		displayBusy.setText("<html>Jane is busy with work and will be back at 5pm<br>Tom is busy with class and will be back at 3pm<br>Dan is busy with TF2 and will be back at 7am<br></html>");
 		displayEateries.setText("<html><u>Diners:</u><br>McKeldin<br>South Campus Diner</html>");
@@ -134,6 +139,9 @@ public class LampFrame extends JFrame{
 		
 		//adding labels to JPanels
 		titlePanel.add(title);
+		ImageIcon image = new ImageIcon("banner.png");
+		JLabel banlabel = new JLabel("", image, JLabel.CENTER);
+		banner.add( banlabel, BorderLayout.CENTER );
 		buildingPanel.add(displayEateries);
 		buildingPanel.add(Box.createRigidArea(new Dimension(15,0)));
 		buildingPanel.add(displayRec);
@@ -147,6 +155,7 @@ public class LampFrame extends JFrame{
 		sideBySide.add(displayBusy);
 		//after consolidating some JPanels, organizes those into a larger JPanel
 		display.add(titlePanel);
+		display.add(banner);
 		display.add(sideBySide);
 		display.add(buildingPanel);
 		
