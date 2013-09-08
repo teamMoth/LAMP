@@ -56,6 +56,11 @@ public class ReadAndWrite {
 		return ent;
 	}
 
+	/**
+	 * writes the information of the EntityGroup and the IDs of the Entities it contains 
+	 * @param entgrp the EntityGroup to be written
+	 * @throws IOException throws if error writing
+	 */
 	public static void writeEntityGroupToFile(EntityGroup entgrp)
 			throws IOException {
 		String name = entgrp.getName();
@@ -73,6 +78,13 @@ public class ReadAndWrite {
 		fw.close();
 	}
 
+	/**
+	 * reads the information about an EntityGroup from a File and then loading in
+	 * the entities it contains separately 
+	 * @param ID name of the file it reads from
+	 * @return EntityGroup read from the file 
+	 * @throws IOException if error reading or file not found
+	 */
 	public static EntityGroup readEntityGroupFromFile(String ID)
 			throws IOException {
 
