@@ -18,6 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 import javax.swing.plaf.ColorUIResource;
 
+import midend.Database;
 import midend.MidEndFormatting;
 
 import aurelienribon.slidinglayout.SLAnimator;
@@ -26,26 +27,28 @@ import aurelienribon.tweenengine.Tween;
 public class LAMP{
 	
 	private static void createAndShowGui(){
+		Database database = new Database();
+		
 		Tween.registerAccessor(LampPanel.class, new LampPanel.Accessor());
 		SLAnimator.start();
-		LampFrame frame = new LampFrame("");
+		LampFrame frame = new LampFrame("",database);
 		
 		if (MidEndFormatting.listOfEntityGroups().length > 1){
 			frame = new LampFrame((String)JOptionPane.showInputDialog(
                     frame, "Which group are you looking for?",
                     "Customized Dialog",
                     JOptionPane.PLAIN_MESSAGE,
-                    null, MidEndFormatting.listOfEntityGroups(), ""));
+                    null, MidEndFormatting.listOfEntityGroups(), ""),database);
 		}
 		else if (MidEndFormatting.listOfEntityGroups().length == 1){
-			frame = new LampFrame(MidEndFormatting.listOfEntityGroups()[0]);
+			frame = new LampFrame(MidEndFormatting.listOfEntityGroups()[0],database);
 		}
 		else{
 			frame = new LampFrame((String)JOptionPane.showInputDialog(
                     frame, "What should the group of people you want to organize be called?",
                     "Customized Dialog",
                     JOptionPane.PLAIN_MESSAGE,
-                    null, null, ""));
+                    null, null, ""),database);
 		}
 		
 		frame.setSize(900, 700);

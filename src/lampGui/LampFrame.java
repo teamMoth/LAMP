@@ -8,7 +8,6 @@ import aurelienribon.slidinglayout.SLSide;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,24 +24,30 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-import midend.MidEndFormatting;
+import data.Time;
+
+import midend.Database;
 
 public class LampFrame extends JFrame{
+	private static final long serialVersionUID = 1L;
 	private final SLPanel panel = new SLPanel();
 	private final LampPanel p1 = new LampPanel("Home", 0xFFFFFF,0x000000,0x000000);
 	private final LampPanel p2 = new LampPanel("Add schedule", 0xFFFFFF,0x000000,0xB0171F);
 	private final LampPanel p3 = new LampPanel("Change time", 0xFFFFFF,0x000000,0xFFD700);
 	private final SLConfig mainCfg, p1Cfg, p2Cfg;
+	private Database database;
 	private String modifyName;
 	String dayOfWeek,timeOfDay;
 	Icon icon = createImageIcon("images/lamp_small.png","logo");
 
-	public LampFrame(String groupName){
+	public LampFrame(String groupName, Database someBase){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("List All My Possibilities");
 		getContentPane().setBackground(Color.DARK_GRAY);
 		getContentPane().add(panel, BorderLayout.CENTER);
 	
+		database = someBase;
+		database.changeEntityGroup(groupName);
 		p1.setAction(menuAction);
 		
 		JButton setTimeToCurrent = new JButton("See what's up right now");
@@ -135,15 +140,23 @@ public class LampFrame extends JFrame{
 	                    null, null,
 	                    "3:00 pm");
 				title.setText("What is happening on " + dayOfWeek + " at " + timeOfDay + "?");
-
-				// refresh p1 with new info
+				displayFree.setText(database.freeDuring(new Time(dayOfWeek,timeOfDay)));
+				displayBusy.setText(database.busyDuring(new Time(dayOfWeek,timeOfDay)));
+				displayEateries.setText(database.openEateries(new Time(dayOfWeek,timeOfDay)));
+				displayRec.setText(database.openREC(new Time(dayOfWeek,timeOfDay)));
+				displayHelp.setText(database.openHelp(new Time(dayOfWeek,timeOfDay)));
 				}
 		});
 		setTimeToCurrent.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt) {
     			dayOfWeek = "RightNow";
     			title.setText("What is happening right now?");
-				// refresh p1 with new info
+				displayFree.setText(database.freeNow());
+				displayBusy.setText(database.busyNow());
+				Time current = database.getCurrentTime();
+				displayEateries.setText(database.openEateries(current));
+				displayRec.setText(database.openREC(current));
+				displayHelp.setText(database.openHelp(current));
 			}
 		});
 		aboutButton.addActionListener(new ActionListener(){
@@ -155,7 +168,7 @@ public class LampFrame extends JFrame{
 		
 		addSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-					modifyName = timeOfDay = (String)JOptionPane.showInputDialog(
+					modifyName = (String)JOptionPane.showInputDialog(
 		                    p2, "Who do you want to add a schedule for?",
 		                    "Customized Dialog",
 		                    JOptionPane.PLAIN_MESSAGE,
@@ -166,7 +179,7 @@ public class LampFrame extends JFrame{
 		});
 		editSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				modifyName = timeOfDay = (String)JOptionPane.showInputDialog(
+				modifyName = (String)JOptionPane.showInputDialog(
 	                    p2, "Whose schedule do you want to edit?",
 	                    "Customized Dialog",
 	                    JOptionPane.PLAIN_MESSAGE,
@@ -177,8 +190,19 @@ public class LampFrame extends JFrame{
 		});
 		switchGroupButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// switch group info
-				// refresh all text fields
+				database.changeEntityGroup((String)JOptionPane.showInputDialog(
+	                    p1, "What group are you interested in?",
+	                    "Customized Dialog",
+	                    JOptionPane.PLAIN_MESSAGE,
+	                    null, null,
+	                    "Bob Lamp"));
+				title.setText("What is happening right now?");
+				displayFree.setText(database.freeNow());
+				displayBusy.setText(database.busyNow());
+				Time current = database.getCurrentTime();
+				displayEateries.setText(database.openEateries(current));
+				displayRec.setText(database.openREC(current));
+				displayHelp.setText(database.openHelp(current));
 			}
 		});
 		backToMenu.addActionListener(new ActionListener() {
