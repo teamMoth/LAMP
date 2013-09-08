@@ -178,8 +178,9 @@ public class Database{
 	 * it will use the existing entity. if not, it will create a new entity.
 	 * @param String entityID
 	 * @return exists
+	 * @throws IOException 
 	 */
-	public boolean addEntity(String entityID){
+	public boolean addEntity(String entityID) throws IOException{
 		boolean exists = false;
 		
 		Entity newEntity = null;
@@ -191,6 +192,18 @@ public class Database{
 		catch(IOException e){
 			newEntity = new Entity(entityID);
 		}
+		
+		grouplist.addEntity(newEntity);
+		try{
+			ReadAndWrite.writeEntityToFile(newEntity);
+			ReadAndWrite.writeEntityGroupToFile(grouplist);
+		}
+		catch (IOException e){
+			System.out.println("Lament! All Progress Missing!");
+			e.printStackTrace();
+			throw new IOException();
+		}
+		
 		return exists;
 	}
 	

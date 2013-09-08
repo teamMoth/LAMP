@@ -23,15 +23,16 @@ public class ReadAndWrite {
 		ObjectOutputStream oos = null;
 
 		try {
-			fos = new FileOutputStream("Entites" + File.separator
-					+ ent.getName());
+			File fo = new File("Entities" + File.separator
+					+ ent.getID());
+			fo.setLastModified(0); 
+			fos = new FileOutputStream(fo);
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(ent);
 			oos.close();
 		} catch (IOException e) {
-			System.out.println("File Save Failed!");
-			e.printStackTrace();
-			throw new FileNotFoundException();
+			System.out.println("File Save Failed! Here");
+            e.printStackTrace();
 		}
 	}
 
@@ -42,16 +43,16 @@ public class ReadAndWrite {
 		Entity ent = null;
 
 		try {
-			fis = new FileInputStream("Entites" + File.separator + ID);
+			fis = new FileInputStream("Entities" + File.separator + ID);
 			ois = new ObjectInputStream(fis);
 			ent = (Entity) ois.readObject();
 			ois.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 			throw new FileNotFoundException();
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 		return ent;
 	}
@@ -67,7 +68,8 @@ public class ReadAndWrite {
 		String ID = entgrp.getID();
 		ArrayList<Entity> entlist = entgrp.getEntities();
 
-		File fin = new File(ID);
+		File fin = new File("EntityGroup" + File.separator + ID);
+		fin.setLastModified(0);
 		FileWriter fw = new FileWriter(fin);
 		fw.write(name + "\n");
 		fw.write(ID + "\n");
