@@ -1,6 +1,10 @@
 package midend;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
+
 import comparison.scheduleComparison;
 import data.Time;
 import entities.Entity;
@@ -92,10 +96,24 @@ public class MidEndFormatting {
 				toReturn += e.getName() + " is currently open\n";
 			}
 		}
-		
 		return toReturn;
 	}
+	
+	static Time systemTime(){
+		Time toReturn = new Time();
+		
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		format.setTimeZone(TimeZone.getTimeZone("GMT"));
+		String time = format.format(java.lang.System.currentTimeMillis());
+		
+		System.out.println(time);
+		
+		return null;
+	}
 
+	public static void main (String[] args){
+		systemTime();
+	}
 
 
 }
