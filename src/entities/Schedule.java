@@ -1,21 +1,27 @@
 package entities;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import data.Time;
 import exceptions.InvalidEventException;
 
-public class Schedule {
+public class Schedule implements Serializable{
 
+	private static final long serialVersionUID = 5581511733693556836L;
 	private static final int INTERVALS_A_DAY = (Time.HOURS_A_DAY * 60)
 			/ (Time.TIME_INTERVAL);
-	private TimeEvent[][] timeArray = new TimeEvent[Time.DAYS_A_WEEK][INTERVALS_A_DAY];
+	private TimeEvent[][] timeArray;
+	private ArrayList<TimeEvent> eventList;
 
 	/**
 	 * empty constructor
 	 */
 	public Schedule() {
+		timeArray =  new TimeEvent[Time.DAYS_A_WEEK][INTERVALS_A_DAY];
+		eventList = new ArrayList<TimeEvent>();
 	}
 
 	/**
@@ -26,18 +32,31 @@ public class Schedule {
 	 */
 	public void addEvent(String eventName, Time start, Time end) {
 		TimeEvent event = new TimeEvent(eventName, start, end);
+		eventList.add(event);
 		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
 			for (int intrvl = timeToInterval(start); intrvl < timeToInterval(end); intrvl++) {
 				timeArray[wk][intrvl] = event;
 			}
 		}
 	}
+	
 
-	//TODO
+	/**
+	 * Returns the TimeEvent that occurs at Time t
+	 * @param t Time that is checked for events
+	 * @return the event that occurs at Time t, if none, returns null
+	 */
 	public TimeEvent getEventAtTime(Time t) {
-		return null;
+		int wk = t.getWeekday();
+		int intrvl = timeToInterval(t);
+		return timeArray[wk][intrvl];
 	}
 
+	/**
+	 * Returns the next free Time after the Time t given
+	 * @param t starting point of the search for free time
+	 * @return next free Time after the Time t given
+	 */
 	public Time nextFree(Time t) {
 		Time nextFreeTime = null;
 		int wk = t.getWeekday();
@@ -124,4 +143,38 @@ public class Schedule {
 		return new Time(weekday, hour, minute);
 	}
 
+	/**
+	 * Refresh the timeArray based off the eventList
+	 */
+	private void updateTimeArray() {
+		clearTimeArray();
+		for (TimeEvent event : eventList) {
+			addEvent(event);
+		}
+	}
+	
+	/**
+	 * Clears the timeArray
+	 */
+	private void clearTimeArray(){
+		for (int i = 0; i < timeArray.length; i++) {
+			for (int j = 0; j < timeArray[i].length; j++) {
+				timeArray[i][j] = null;
+			}
+		}
+	}
+	
+	/**
+	 * Insert an existing event in the timeArray
+	 * @param event TimeEvent to insert
+	 */
+	private void addEvent(TimeEvent event) {
+		Time start = event.getStartTime();
+		Time end = event.getEndTime();
+		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
+			for (int intrvl = timeToInterval(start); intrvl < timeToInterval(end); intrvl++) {
+				timeArray[wk][intrvl] = event;
+			}
+		}
+	}
 }

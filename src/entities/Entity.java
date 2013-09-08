@@ -70,6 +70,10 @@ public class Entity implements Serializable{
 		return name;
 	}
 	
+	public void clearSchedule() {
+		entitySchedule = new Schedule();
+	}
+	
 	/**
 	 * adds an event to this entity's schedule
 	 * @param eventName name of the event to day
@@ -96,6 +100,15 @@ public class Entity implements Serializable{
 	 */
 	public Set<Time> timesFree() {
 		return entitySchedule.timesFree();
+	}
+	
+	/**
+	 * Returns the next free Time for this entity after the Time t given
+	 * @param t starting point of the search for free time
+	 * @return next free Time after the Time t given
+	 */
+	public Time nextFree(Time t) {
+		return entitySchedule.nextFree(t);
 	}
 	
 	/**
