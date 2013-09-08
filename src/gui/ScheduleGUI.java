@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 
 import java.awt.event.*;
+import java.text.Format.Field;
 import java.util.Random;
 
 import javax.swing.*;
@@ -27,8 +28,14 @@ public class ScheduleGUI extends JPanel{
 	private String scheduleName;
 	
 	
-	public ScheduleGUI(String name){
+	public ScheduleGUI(String name, String[][] strArr){
+		
 		myCalendar = new Calendar(HOURS_IN_DAY * SECTIONS_IN_HOUR, DAYS_IN_WEEK);
+			
+		if (strArr != null){
+			myCalendar.schedule = strToTimeSlot(strArr);
+		}
+		
 		this.scheduleName = name;
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -245,6 +252,28 @@ public class ScheduleGUI extends JPanel{
 		}
 	}
 	
+	public TimeSlot[][] strToTimeSlot(String[][] strArr){
+		TimeSlot[][] newSchedule = new TimeSlot[strArr.length][strArr[0].length];
+		
+		for (int i = 0; i < strArr.length; i ++){
+			for (int j = 0; j < strArr[0].length; j ++){
+				String[] nameAndColor = strArr[i][j].split(";");
+				newSchedule[i][j].setName(nameAndColor[0]);
+				
+				Color color;
+				try {
+				    java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(nameAndColor[1]);
+				    color = (Color)field.get(null);
+				} catch (Exception e) {
+				    color = null; // Not defined
+				}
+				
+				newSchedule[i][j].setColor(color);
+			}
+		}
+		return newSchedule;
+	}
+	
 	public String[][] getSchedule(){
 		TimeSlot[][] schedule = myCalendar.schedule;
 		String[][] stringSchedule = new String[schedule.length][schedule[0].length];
@@ -276,7 +305,7 @@ public class ScheduleGUI extends JPanel{
 	
 	/* delete this method */
 	public static void createAndDisplayGUI(Calendar calendar){
-		ScheduleGUI scheduleGUI = new ScheduleGUI("Dan");
+		ScheduleGUI scheduleGUI = new ScheduleGUI("Dan", null);
 		
 		JFrame frame = new JFrame("Calendar");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
