@@ -13,6 +13,10 @@ public class Database{
 	
 	EntityGroup grouplist;
 	
+	public Database(){
+		grouplist = new EntityGroup();
+	}
+	
 	public String freeNow(){
 		Time now = MidEndFormatting.systemTime();
 		return freeDuring(now);
