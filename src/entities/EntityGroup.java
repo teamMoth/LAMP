@@ -1,6 +1,7 @@
 package entities;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import data.ReadAndWrite;
@@ -14,12 +15,18 @@ public class EntityGroup {
 	
 	public EntityGroup(){
 		entityList = new ArrayList<Entity>();
-	}
-	
-	public EntityGroup(String ID) throws FileNotFoundException {
-		EntityGroup newGrp = ReadAndWrite.readEntityGroupFromFile(ID);
 		this.ID = String.valueOf(Integer.toHexString(this.hashCode()).toString()
 				.substring(4, 8));
+	}
+	
+	public EntityGroup(String name, String ID, ArrayList<Entity> entList) {
+		this.name = name;
+		this.ID = ID;
+		this.entityList = entList;
+	}
+	
+	public EntityGroup(String ID) throws IOException {
+		EntityGroup newGrp = ReadAndWrite.readEntityGroupFromFile(ID);
 		entityList = newGrp.entityList;
 		name = newGrp.name;
 	}
@@ -44,6 +51,7 @@ public class EntityGroup {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	
 	/**
 	 * returns the list of entities in the group

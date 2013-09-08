@@ -15,6 +15,8 @@ import data.Time;
 public class Schedule implements Serializable{
 
 	private static final long serialVersionUID = 5581511733693556836L;
+	private static String SPLIT_CHAR = ";";
+	private static String FREE_TIME_STRING = "FREE"; 
 
 	private TimeEvent[][] timeArray;
 	private ArrayList<TimeEvent> eventList;
@@ -25,6 +27,37 @@ public class Schedule implements Serializable{
 	public Schedule() {
 		timeArray =  new TimeEvent[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
 		eventList = new ArrayList<TimeEvent>();
+	}
+
+
+	
+	/**
+	 * Replaces the current schedule with one stored in an array of strings, [weekday][interval]
+	 * with each cell representing a Time block
+	 * @param strSched string representation of the schedule to add to Entity
+	 */
+	public Schedule (String[][] strSched) {
+		int startwk = 0, startintrvl = 0;
+		String schedStr = null, prevSchedStr;
+		
+		for (int wk = 0; wk < strSched.length; wk++) {
+			for (int intrvl = 0; intrvl < strSched[wk].length; intrvl++) {
+				prevSchedStr = schedStr;
+				schedStr = strSched[wk][intrvl];
+				
+				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
+					String eventName = schedStr.split(SPLIT_CHAR)[0];
+					if (!eventName.equalsIgnoreCase(FREE_TIME_STRING)) {
+						TimeEvent event = addEvent(eventName, new Time(startwk, startintrvl),
+								new Time(wk, intrvl - 1));
+						event.addProperty("COLOR", schedStr.split(SPLIT_CHAR)[1]);
+						startwk = wk;
+						startintrvl = intrvl;
+					}
+				}
+
+			}
+		}
 	}
 
 	/**
@@ -118,4 +151,18 @@ public class Schedule implements Serializable{
 		return times;
 	}
 
+	
+	public String[][] scheduleToGUI() {
+		String[][] strSched = new String[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
+		for (int wk = 0; wk < Time.DAYS_A_WEEK; wk++) {
+			for (int intrvl = 0; intrvl < Time.INTERVALS_A_DAY; intrvl++) {
+				TimeEvent event = getEventAtTime(new Time(wk, intrvl));
+				String str = event.getName() + ";" + event.getProperty("COLOR");
+				strSched[wk][intrvl] = str;
+			}
+		}
+		return strSched;
+	}
+	
+	
 }

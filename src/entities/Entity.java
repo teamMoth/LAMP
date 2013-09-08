@@ -16,8 +16,6 @@ import data.Time;
 public class Entity implements Serializable {
 
 	private static final long serialVersionUID = -6326844684848713032L;
-	private static String SPLIT_CHAR = ";";
-	private static String FREE_TIME_STRING = "FREE"; 
 	private Schedule entitySchedule;
 	private ArrayList<String> tags;
 	private String name;
@@ -87,7 +85,7 @@ public class Entity implements Serializable {
 	 * 
 	 * @return what event, or null if none, the entity has at time t.
 	 */
-	public TimeEvent eventAtTime(Time t) {
+	public TimeEvent getEventAtTime(Time t) {
 		return entitySchedule.getEventAtTime(t);
 	}
 
@@ -124,61 +122,11 @@ public class Entity implements Serializable {
 	 * @param strSched string representation of the schedule to add to Entity
 	 */
 	public void scheduleFromGUI(String[][] strSched) {
-		int startwk = 0, startintrvl = 0;
-		String schedStr = null, prevSchedStr;
-		clearSchedule();
-		
-		for (int wk = 0; wk < strSched.length; wk++) {
-			for (int intrvl = 0; intrvl < strSched[wk].length; intrvl++) {
-				prevSchedStr = schedStr;
-				schedStr = strSched[wk][intrvl];
-				
-				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
-					String eventName = schedStr.split(SPLIT_CHAR)[0];
-					if (!eventName.equalsIgnoreCase(FREE_TIME_STRING)) {
-						TimeEvent event = addEvent(eventName, new Time(startwk, startintrvl),
-								new Time(wk, intrvl - 1));
-						event.addProperty("COLOR", schedStr.split(SPLIT_CHAR)[1]);
-						startwk = wk;
-						startintrvl = intrvl;
-					}
-				}
-
-			}
-		}
+		entitySchedule = new Schedule(strSched); 
 	}
 	
 	public String[][] scheduleToGUI() {
-		String[][] strSched = new String[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
-		for (int wk = 0; wk < Time.DAYS_A_WEEK; wk++) {
-			for (int intrvl = 0; intrvl < Time.INTERVALS_A_DAY; intrvl++) {
-				TimeEvent event = eventAtTime(new Time(wk, intrvl));
-				String str = event.getName() + ";" + event.getProperty("COLOR");
-				strSched[wk][intrvl] = str;
-			}
-		}
-		return strSched;
-	}
-	
-	/**
-	 * replaces the existing schedule with a new empty one
-	 */
-	private void clearSchedule() {
-		entitySchedule = new Schedule();
-	}
-
-	/**
-	 * adds an event to this entity's schedule
-	 * 
-	 * @param eventName
-	 *            name of the event to day
-	 * @param startTime
-	 *            starting time of the event to add
-	 * @param endTime
-	 *            ending time of the event to add
-	 */
-	private TimeEvent addEvent(String eventName, Time startTime, Time endTime) {
-		return entitySchedule.addEvent(eventName, startTime, endTime);
+		return entitySchedule.scheduleToGUI();
 	}
 
 

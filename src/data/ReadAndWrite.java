@@ -1,9 +1,11 @@
 package data;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,12 +17,14 @@ import entities.EntityGroup;
 
 public class ReadAndWrite {
 
-	public static void writeEntityToFile(Entity ent) throws FileNotFoundException{
+	public static void writeEntityToFile(Entity ent)
+			throws FileNotFoundException {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
-		
+
 		try {
-			fos = new FileOutputStream("Entites"+File.separator+ent.getName());
+			fos = new FileOutputStream("Entites" + File.separator
+					+ ent.getName());
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(ent);
 			oos.close();
@@ -30,14 +34,15 @@ public class ReadAndWrite {
 			throw new FileNotFoundException();
 		}
 	}
-	
-	public static Entity readEntityFromFile(String ID) throws FileNotFoundException{
+
+	public static Entity readEntityFromFile(String ID)
+			throws FileNotFoundException {
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		Entity ent = null;
-		
+
 		try {
-			fis = new FileInputStream("Entites"+File.separator+ID);
+			fis = new FileInputStream("Entites" + File.separator + ID);
 			ois = new ObjectInputStream(fis);
 			ent = (Entity) ois.readObject();
 			ois.close();
@@ -47,49 +52,41 @@ public class ReadAndWrite {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return ent;
 	}
-	
-	public static void writeEntityGroupToFile(EntityGroup entgrp) throws FileNotFoundException{
+
+	public static void writeEntityGroupToFile(EntityGroup entgrp)
+			throws IOException {
 		String name = entgrp.getName();
 		String ID = entgrp.getID();
 		ArrayList<Entity> entlist = entgrp.getEntities();
-		
+
 		File fin = new File(ID);
-		try {
-			FileWriter fw = new FileWriter(fin);
-			fw.write(name + "\n");
-			fw.write(ID + "\n");
-			for (Entity ent: entlist) {
-				fw.write(ent.getID() + "\n");
-			}
-			fw.flush();
-			fw.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		FileWriter fw = new FileWriter(fin);
+		fw.write(name + "\n");
+		fw.write(ID + "\n");
+		for (Entity ent : entlist) {
+			fw.write(ent.getID() + "\n");
 		}
+		fw.flush();
+		fw.close();
 	}
-	
-	public static EntityGroup readEntityGroupFromFile(String ID) throws FileNotFoundException{
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-		EntityGroup entgrp = null;
+
+	public static EntityGroup readEntityGroupFromFile(String ID)
+			throws IOException {
+
+		File fin = new File(ID);
+		BufferedReader br = new BufferedReader(new FileReader(fin));
 		
-		try {
-			fis = new FileInputStream("EntityGroup"+File.separator+ID);
-			ois = new ObjectInputStream(fis);
-			entgrp = (EntityGroup) ois.readObject();
-			ois.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new FileNotFoundException();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new FileNotFoundException();
+		String egName = br.readLine();
+		String egID = br.readLine();
+		String entID;
+		ArrayList<Entity> entList = new ArrayList<Entity>();
+		while ((entID = br.readLine()) != null) {
+			entList.add(readEntityFromFile(entID));
 		}
-		
-		return entgrp;
+		br.close();
+		return new EntityGroup(egName, egID, entList);
 	}
 }
