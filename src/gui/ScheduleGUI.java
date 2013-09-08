@@ -17,9 +17,9 @@ public class ScheduleGUI extends JPanel{
 	private static int PANEL_MIN_WIDTH = 100;
 	private static int CELL_HEIGHT = 15;
 	private static int CELL_WIDTH = 60;
-	private static int DAYS_IN_WEEK = 7;
-	private static int HOURS_IN_DAY = 18;
-	private static int SECTIONS_IN_HOUR = 2;
+	private static int DAYS_IN_WEEK = Time.DAYS_A_WEEK;
+	private static int HOURS_IN_DAY = Time.HOURS_A_DAY;
+	private static int SECTIONS_IN_HOUR = 60/Time.TIME_INTERVAL;
 	private static boolean RAISED_CELL = true;
 	private Calendar myCalendar;
 	private int hardCodedNumber = 21;
@@ -197,21 +197,21 @@ public class ScheduleGUI extends JPanel{
 
 	
 	private class MouseHandler extends MouseAdapter {
-		ScheduleGUI mainGUI;
+		ScheduleGUI scheduleGUI;
 		
-		public MouseHandler(ScheduleGUI mainGUI){
-			this.mainGUI = mainGUI;
+		public MouseHandler(ScheduleGUI scheduleGUI){
+			this.scheduleGUI = scheduleGUI;
 		}
 		
 		public void mouseReleased(MouseEvent event) {
 			
 			Point point = event.getPoint();
 			
-			System.out.println("GUI width: " + mainGUI.getWidth());
+			System.out.println("GUI width: " + scheduleGUI.getWidth());
 			
 			System.out.println("point.x: " + point.x + "\npoint.y: " + point.y);
 			
-			double xStart = (mainGUI.getWidth() / 2.0) - (DAYS_IN_WEEK * CELL_WIDTH / 2.0);
+			double xStart = (scheduleGUI.getWidth() / 2.0) - (DAYS_IN_WEEK * CELL_WIDTH / 2.0);
 			
 			System.out.println("xStart: " + xStart);
 			
@@ -250,11 +250,11 @@ public class ScheduleGUI extends JPanel{
 	}
 	
 	public static void createAndDisplayGUI(Calendar calendar){
-		ScheduleGUI mainGUI = new ScheduleGUI();
+		ScheduleGUI scheduleGUI = new ScheduleGUI();
 		
 		JFrame frame = new JFrame("Calendar");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(mainGUI);
+		frame.add(scheduleGUI);
 		frame.pack();
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
