@@ -44,7 +44,8 @@ public class Entity implements Serializable {
 		try {
 			ReadAndWrite.readEntityFromFile(ID);
 		} catch (FileNotFoundException e) {
-			new Entity();
+			entitySchedule = new Schedule();
+			tags = new ArrayList<String>();
 			setName(ID);
 		}
 	}
