@@ -205,7 +205,7 @@ public class LampFrame extends JFrame{
 		                    null, null,
 		                    "Bob Lamp");
 					p3.removeAll();
-					mySchedule = new ScheduleGUI(modifyName);
+					mySchedule = new ScheduleGUI(modifyName, null);
 					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
 					p3.add(Box.createRigidArea(new Dimension(0,15)));
 					p3.add(mySchedule);

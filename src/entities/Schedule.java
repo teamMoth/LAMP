@@ -8,15 +8,17 @@ import java.util.Set;
 import data.Time;
 
 /**
- * An arraylist of events and time array representing when an entity is available
+ * An arraylist of events and time array representing when an entity is
+ * available
+ * 
  * @author ganc
- *
+ * 
  */
-public class Schedule implements Serializable{
+public class Schedule implements Serializable {
 
 	private static final long serialVersionUID = 5581511733693556836L;
 	private static String SPLIT_CHAR = ";";
-	private static String FREE_TIME_STRING = "FREE"; 
+	private static String FREE_TIME_STRING = "FREE";
 
 	private TimeEvent[][] timeArray;
 	private ArrayList<TimeEvent> eventList;
@@ -25,34 +27,35 @@ public class Schedule implements Serializable{
 	 * empty constructor
 	 */
 	public Schedule() {
-		timeArray =  new TimeEvent[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
+		timeArray = new TimeEvent[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
 		eventList = new ArrayList<TimeEvent>();
 	}
 
-
-	
 	/**
-	 * Replaces the current schedule with one stored in an array of strings, [weekday][interval]
-	 * with each cell representing a Time block
-	 * @param strSched string representation of the schedule to add to Entity
+	 * Replaces the current schedule with one stored in an array of strings,
+	 * [weekday][interval] with each cell representing a Time block
+	 * 
+	 * @param strSched
+	 *            string representation of the schedule to add to Entity
 	 */
-	public Schedule (String[][] strSched) {
-		timeArray =  new TimeEvent[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
+	public Schedule(String[][] strSched) {
+		timeArray = new TimeEvent[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
 		eventList = new ArrayList<TimeEvent>();
 		int startwk = 0, startintrvl = 0;
 		String schedStr = null, prevSchedStr;
-		
-		for (int wk = 0; wk < strSched.length; wk++) {
-			for (int intrvl = 0; intrvl < strSched[wk].length; intrvl++) {
+
+		for (int intrvl = 0; intrvl < strSched.length; intrvl++) {
+			for (int wk = 0; wk < strSched[intrvl].length; wk++) {
 				prevSchedStr = schedStr;
-				schedStr = strSched[wk][intrvl];
-				
+				schedStr = strSched[intrvl][wk];
+
 				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
 					String eventName = schedStr.split(SPLIT_CHAR)[0];
 					if (!eventName.equalsIgnoreCase(FREE_TIME_STRING)) {
-						TimeEvent event = addEvent(eventName, new Time(startwk, startintrvl),
-								new Time(wk, intrvl - 1));
-						event.addProperty("COLOR", schedStr.split(SPLIT_CHAR)[1]);
+						TimeEvent event = addEvent(eventName, new Time(startwk,
+								startintrvl), new Time(wk, intrvl - 1));
+						event.addProperty("COLOR",
+								schedStr.split(SPLIT_CHAR)[1]);
 						startwk = wk;
 						startintrvl = intrvl;
 					}
@@ -64,10 +67,14 @@ public class Schedule implements Serializable{
 
 	/**
 	 * Adds event to the Schedule
-	 * @param eventName name of the event to add
-	 * @param start starting time of the event
-	 * @param end ending time of the event
-	 * @return 
+	 * 
+	 * @param eventName
+	 *            name of the event to add
+	 * @param start
+	 *            starting time of the event
+	 * @param end
+	 *            ending time of the event
+	 * @return
 	 */
 	public TimeEvent addEvent(String eventName, Time start, Time end) {
 		TimeEvent event = new TimeEvent(eventName, start, end);
@@ -79,11 +86,12 @@ public class Schedule implements Serializable{
 		}
 		return event;
 	}
-	
 
 	/**
 	 * Returns the TimeEvent that occurs at Time t
-	 * @param t Time that is checked for events
+	 * 
+	 * @param t
+	 *            Time that is checked for events
 	 * @return the event that occurs at Time t, if none, returns null
 	 */
 	public TimeEvent getEventAtTime(Time t) {
@@ -94,24 +102,26 @@ public class Schedule implements Serializable{
 
 	/**
 	 * Returns the next free Time after the Time t given
-	 * @param t starting point of the search for free time
+	 * 
+	 * @param t
+	 *            starting point of the search for free time
 	 * @return next free Time after the Time t given
 	 */
 	public Time nextFree(Time t) {
 		Time nextFreeTime = null;
 		int wk = t.getWeekday();
 		int intrvl = t.toInterval();
-		
+
 		for (int wkday = wk; wkday < Time.DAYS_A_WEEK; wkday++) {
-			for (int timeChunk = intrvl; timeChunk < Time.INTERVALS_A_DAY; timeChunk++){
-				if (timeArray[wk][timeChunk] == null){
+			for (int timeChunk = intrvl; timeChunk < Time.INTERVALS_A_DAY; timeChunk++) {
+				if (timeArray[wk][timeChunk] == null) {
 					nextFreeTime = new Time(wk, timeChunk);
 				}
 			}
 		}
 		return nextFreeTime;
 	}
-	
+
 	/**
 	 * returns a set of all Time objects where the Entity is free in the entire
 	 * week
@@ -154,12 +164,14 @@ public class Schedule implements Serializable{
 	}
 
 	/**
-	 * returns a version of the current schedule into an array of strings of [weekday][interval]
-	 * with each cell presenting a Time block with event name and color for the GUI
+	 * returns a version of the current schedule into an array of strings of
+	 * [weekday][interval] with each cell presenting a Time block with event
+	 * name and color for the GUI
+	 * 
 	 * @return an array of strings for the GUI
 	 */
 	public String[][] scheduleToGUI() {
-		String[][] strSched = new String[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
+		String[][] strSched = new String[Time.INTERVALS_A_DAY][Time.DAYS_A_WEEK];
 		for (int wk = 0; wk < Time.DAYS_A_WEEK; wk++) {
 			for (int intrvl = 0; intrvl < Time.INTERVALS_A_DAY; intrvl++) {
 				TimeEvent event = getEventAtTime(new Time(wk, intrvl));
@@ -167,13 +179,12 @@ public class Schedule implements Serializable{
 				if (event != null) {
 					str = event.getName() + ";" + event.getProperty("COLOR");
 				} else {
-					str = "FREE;";
+					str = "FREE;WHITE";
 				}
-				strSched[wk][intrvl] = str;
+				strSched[intrvl][wk] = str;
 			}
 		}
 		return strSched;
 	}
-	
-	
+
 }

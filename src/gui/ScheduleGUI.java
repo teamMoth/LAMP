@@ -258,7 +258,6 @@ public class ScheduleGUI extends JPanel{
 		for (int i = 0; i < strArr.length; i ++){
 			for (int j = 0; j < strArr[0].length; j ++){
 				String[] nameAndColor = strArr[i][j].split(";");
-				newSchedule[i][j].setName(nameAndColor[0]);
 				
 				Color color;
 				try {
@@ -267,8 +266,8 @@ public class ScheduleGUI extends JPanel{
 				} catch (Exception e) {
 				    color = null; // Not defined
 				}
-				
-				newSchedule[i][j].setColor(color);
+
+				newSchedule[i][j] = new TimeSlot(nameAndColor[0], color);
 			}
 		}
 		return newSchedule;
