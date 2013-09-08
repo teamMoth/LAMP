@@ -7,6 +7,11 @@ import aurelienribon.slidinglayout.SLPanel;
 import aurelienribon.slidinglayout.SLSide;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,7 +21,10 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -44,6 +52,63 @@ public class LampFrame extends JFrame{
 		JButton editSchedule = new JButton("Modify a schedule");
 		JButton backToMenu = new JButton("Submit");
 		JButton aboutButton = new JButton("About");
+		JPanel titlePanel = new JPanel();
+		JPanel display = new JPanel();
+		JPanel buildingPanel = new JPanel();
+		JPanel sideBySide = new JPanel();
+		display.setBackground(Color.BLACK);
+		sideBySide.setBackground(Color.BLACK);
+		
+		display.setLayout(new BoxLayout(display, BoxLayout.PAGE_AXIS));
+		JLabel title = new JLabel();
+		JLabel displayFree = new JLabel();
+		JLabel displayBusy = new JLabel();
+		JLabel displayEateries = new JLabel();
+		JLabel displayRec = new JLabel();
+		JLabel displayHelp = new JLabel();
+		
+		title.setHorizontalAlignment(SwingConstants.LEFT);
+		title.setText("What is happening right now?");
+		displayFree.setText("<html>Bob jumped over the crazy dog asdlkjaeryg<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br>McKeldin<br><br></html>");
+		displayBusy.setText("Jane will next be available never and woah its late");
+		displayEateries.setText("<html>McKeldin<br>South Campus Diner</html>");
+		displayRec.setText("<html>McKeldin<br>Epply<br>Tennis courts</html>");
+		displayHelp.setText("<html>University Health Center<br>Help Center<br>Help tutoring</html>");
+		
+		title.setFont(new Font("Serif", Font.PLAIN, 36));
+		title.setForeground(new Color(0xFFFFFF));
+		
+		titlePanel.setBackground(Color.BLACK);
+		titlePanel.add(title);
+		buildingPanel.setBackground(Color.BLACK);
+		buildingPanel.setLayout(new BoxLayout(buildingPanel, BoxLayout.X_AXIS));
+		buildingPanel.add(displayEateries);
+		buildingPanel.add(displayRec);
+		buildingPanel.add(displayHelp);
+		
+		displayFree.setForeground(new Color(0xFFFFFF));
+		displayBusy.setForeground(new Color(0xFFFFFF));
+		displayEateries.setForeground(new Color(0xFFFFFF));
+		displayRec.setForeground(new Color(0xFFFFFF));
+		displayHelp.setForeground(new Color(0xFFFFFF));
+		
+		displayFree.setVerticalAlignment(SwingConstants.TOP);
+		displayBusy.setVerticalAlignment(SwingConstants.TOP);
+		displayFree.setAlignmentY(0);
+		displayBusy.setAlignmentY(0);
+		
+		sideBySide.setLayout(new BoxLayout(sideBySide, BoxLayout.X_AXIS));
+		sideBySide.add(displayFree);
+		Dimension minSize = new Dimension(25, 100);
+		Dimension prefSize = new Dimension(25, 100);
+		Dimension maxSize = new Dimension(Short.MAX_VALUE, 1000);
+		sideBySide.add(new Box.Filler(minSize, prefSize, maxSize));
+		sideBySide.add(displayBusy);
+		
+		display.add(titlePanel);
+		display.add(sideBySide);
+		display.add(buildingPanel);
+		
 		setTimeToCurrent.setBackground(Color.YELLOW);
 		newTime.setBackground(Color.YELLOW);
 		addSchedule.setBackground(Color.YELLOW);
@@ -120,6 +185,7 @@ public class LampFrame extends JFrame{
         }).start();
 		
 		p1.setBackground(Color.BLACK);
+		p1.add(display);
 		p2.setBackground(Color.RED);
 		p2.add(setTimeToCurrent);
 		p2.add(newTime);
