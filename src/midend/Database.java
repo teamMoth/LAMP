@@ -171,11 +171,14 @@ public class Database{
 		}
 		catch (IOException e) {
 			entToChange = new Entity();
+			entToChange.setName(entityID);
 		}
 		entToChange.scheduleFromGUI(newSchedule);
-		
+
+		grouplist.addEntity(entToChange);
 		try{
 			ReadAndWrite.writeEntityToFile(entToChange);
+			ReadAndWrite.writeEntityGroupToFile(grouplist);
 		}
 		catch (IOException e){
 			System.out.println("Lament! All Progress Missing!");
@@ -205,6 +208,7 @@ public class Database{
 		}
 		
 		grouplist.addEntity(newEntity);
+		
 		try{
 			ReadAndWrite.writeEntityToFile(newEntity);
 			ReadAndWrite.writeEntityGroupToFile(grouplist);

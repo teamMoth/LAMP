@@ -35,6 +35,8 @@ public class ScheduleGUI extends JPanel{
 		if (strArr != null){
 			myCalendar.schedule = strToTimeSlot(strArr);
 		}
+		else
+			System.out.println("strArr is null");
 		
 		this.scheduleName = name;
 		
@@ -261,8 +263,9 @@ public class ScheduleGUI extends JPanel{
 				
 				Color color;
 				try {
-				    java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(nameAndColor[1]);
-				    color = (Color)field.get(null);
+//				    java.lang.reflect.Field field = Class.forName("java.awt.Color").getField(nameAndColor[1]);
+//				    color = (Color)field.get(null);
+				    color = new Color(Integer.parseInt(nameAndColor[1]));
 				} catch (Exception e) {
 				    color = null; // Not defined
 				}
@@ -279,7 +282,7 @@ public class ScheduleGUI extends JPanel{
 		
 		for (int i = 0; i < schedule.length; i ++){
 			for (int j = 0; j < schedule[0].length; j ++){
-				stringSchedule[i][j] = schedule[i][j].getName() + ";" + schedule[i][j].getColor();
+				stringSchedule[i][j] = schedule[i][j].getName() + ";" + schedule[i][j].getColor().getRGB();
 			}
 		}
 		

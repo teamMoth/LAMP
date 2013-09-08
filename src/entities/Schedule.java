@@ -43,26 +43,29 @@ public class Schedule implements Serializable {
 		eventList = new ArrayList<TimeEvent>();
 		int startwk = 0, startintrvl = 0;
 		String schedStr = null, prevSchedStr;
-
-		for (int intrvl = 0; intrvl < strSched.length; intrvl++) {
-			for (int wk = 0; wk < strSched[intrvl].length; wk++) {
+		System.out.println("frmgui1: " + strSched[0][0]);
+		for (int wk = 0; wk < strSched[0].length; wk++) {
+			for (int intrvl = 0; intrvl < strSched.length; intrvl++) {
 				prevSchedStr = schedStr;
 				schedStr = strSched[intrvl][wk];
 
-				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
-					String eventName = schedStr.split(SPLIT_CHAR)[0];
+				if (!schedStr.equalsIgnoreCase(prevSchedStr) && prevSchedStr != null) {
+					String eventName = prevSchedStr.split(SPLIT_CHAR)[0];
 					if (!eventName.equalsIgnoreCase(FREE_TIME_STRING)) {
 						TimeEvent event = addEvent(eventName, new Time(startwk,
-								startintrvl), new Time(wk, intrvl - 1));
+								startintrvl), new Time(wk, intrvl));
 						event.addProperty("COLOR",
 								schedStr.split(SPLIT_CHAR)[1]);
-						startwk = wk;
-						startintrvl = intrvl;
 					}
+					startwk = wk;
+					startintrvl = intrvl;
 				}
 
 			}
 		}
+
+		System.out.println("frmgui2: "
+				+ getEventAtTime(new Time(0, 0)).getName());
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class Schedule implements Serializable {
 		TimeEvent event = new TimeEvent(eventName, start, end);
 		eventList.add(event);
 		for (int wk = start.getWeekday(); wk < end.getWeekday(); wk++) {
-			for (int intrvl = start.toInterval(); intrvl < end.toInterval(); intrvl++) {
+			for (int intrvl = start.toInterval(); intrvl <= end.toInterval(); intrvl++) {
 				timeArray[wk][intrvl] = event;
 			}
 		}
@@ -179,11 +182,12 @@ public class Schedule implements Serializable {
 				if (event != null) {
 					str = event.getName() + ";" + event.getProperty("COLOR");
 				} else {
-					str = "FREE;WHITE";
+					str = "FREE;0xFFFFFF";
 				}
 				strSched[intrvl][wk] = str;
 			}
 		}
+		System.out.println("!" + strSched[0][0]);
 		return strSched;
 	}
 

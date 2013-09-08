@@ -21,7 +21,8 @@ public class ReadAndWrite {
 			throws FileNotFoundException {
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
-
+		
+		System.out.println("w: " + ent.getEventAtTime(new Time(0, 0)));
 		try {
 			File fo = new File("Entities" + File.separator
 					+ ent.getID());

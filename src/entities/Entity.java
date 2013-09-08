@@ -54,7 +54,7 @@ public class Entity implements Serializable {
 	 * set name and ID of entity to parameter name 
 	 * @param name name to set entity name
 	 */
-	private void setName(String name) {
+	public void setName(String name) {
 		this.name = name;		
 		this.ID = name;
 	}
