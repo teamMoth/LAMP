@@ -13,7 +13,7 @@ public class EntityGroup {
 	}
 	
 	public EntityGroup(String ID) {
-		ReadAndWrite.readFromFile(ID);
+		ReadAndWrite.readEntityGroupFromFile(ID);
 		//TODO
 	}
 
