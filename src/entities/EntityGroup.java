@@ -1,20 +1,23 @@
 package entities;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import data.ReadAndWrite;
 
 public class EntityGroup {
 	
-	private ArrayList<Entity> entityList= new ArrayList<Entity>();
+	private ArrayList<Entity> entityList;;
 	private String name;
 	
 	public EntityGroup(){
+		entityList = new ArrayList<Entity>();
 	}
 	
-	public EntityGroup(String ID) {
-		ReadAndWrite.readEntityGroupFromFile(ID);
-		//TODO
+	public EntityGroup(String ID) throws FileNotFoundException {
+		EntityGroup newGrp = ReadAndWrite.readEntityGroupFromFile(ID);
+		entityList = newGrp.entityList;
+		name = newGrp.name;
 	}
 
 	/**
