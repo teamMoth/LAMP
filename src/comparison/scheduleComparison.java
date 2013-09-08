@@ -59,12 +59,12 @@ public class scheduleComparison {
 	 */
 	public EntityGroup freeMembers(Time t){
 		
-		EntityGroup freeMembs = new EntityGroup("Free Memebers", null, new ArrayList<Entity>());
+		EntityGroup freeMembs = new EntityGroup("Free Members", null, new ArrayList<Entity>());
 		
 		Iterator<Entity> i = AOE.iterator();
 		while(i.hasNext()){
 			Entity nextEnt = i.next();
-			if(nextEnt.timesFree().contains(t)){
+			if(!nextEnt.timesFree().contains(t)){
 				freeMembs.addEntity(nextEnt);
 			}
 		}

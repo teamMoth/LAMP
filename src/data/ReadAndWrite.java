@@ -90,7 +90,7 @@ public class ReadAndWrite {
 	public static EntityGroup readEntityGroupFromFile(String ID)
 			throws IOException {
 
-		File fin = new File(ID);
+		File fin = new File("EntityGroup" + File.separator + ID);
 		BufferedReader br = new BufferedReader(new FileReader(fin));
 		
 		String egName = br.readLine();
