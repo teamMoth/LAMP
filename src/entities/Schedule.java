@@ -48,14 +48,32 @@ public class Schedule implements Serializable {
 
 		int day = 0; int interv = 0; boolean cont = false;
 		
+		TimeEvent newEvent;
+		
 		for(int c = 0; c < strSched[0].length-1; c ++){
 			for(int r = 0; r < strSched.length-1; r ++){
-				if(strSched[r][c].equalsIgnoreCase(strSched[r+1][c])){
-					cont = true;
+				if(strSched[r][c] != null && strSched[r+1][c+1] != null){
+					if(strSched[r][c].equalsIgnoreCase(strSched[r+1][c+1])){
+						cont = true;
+						interv = r;
+						day = c;
+						while(cont = true && r < strSched.length-2){
+							r ++;
+							if(strSched[r][c] != null && strSched[r+1][c+1] != null){
+								if(!strSched[r][c].equalsIgnoreCase(strSched[r+1][c+1])){
+									cont = false;
+								}
+							}
+							else{
+								cont = false;
+							}
+						}
+						newEvent = new TimeEvent("event"+c,new Time(day, interv), new Time(c, r));
+						eventList.add(newEvent);
+					}
 				}
 			}
 		}
-		
 		System.out.println("frmgui2: "
 				+ getEventAtTime(new Time(0, 0)).getName());
 	}

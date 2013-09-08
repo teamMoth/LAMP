@@ -1,8 +1,11 @@
 package gui;
 
 import java.awt.*;
-
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.text.Format.Field;
 import java.util.Random;
 
@@ -28,15 +31,32 @@ public class ScheduleGUI extends JPanel{
 	private String scheduleName;
 	
 	
-	public ScheduleGUI(String name, String[][] strArr){
+	public ScheduleGUI(String name, boolean test){
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		Calendar ent = null;
+
+		try {
+			fis = new FileInputStream("lastDitch");
+			ois = new ObjectInputStream(fis);
+			ent = (Calendar) ois.readObject();
+			ois.close();
+		} catch (IOException e) {
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
-		myCalendar = new Calendar(HOURS_IN_DAY * SECTIONS_IN_HOUR, DAYS_IN_WEEK);
-			
-		if (strArr != null){
-			myCalendar.schedule = strToTimeSlot(strArr);
-		}
+		if (test)
+			myCalendar = ent;
 		else
-			System.out.println("strArr is null");
+			myCalendar = new Calendar(Time.INTERVALS_A_DAY, Time.DAYS_A_WEEK);
+			
+//		if (strArr != null){
+//			myCalendar.schedule = strToTimeSlot(strArr);
+//		}
+//		else
+//			System.out.println("strArr is null");
 		
 		this.scheduleName = name;
 		
@@ -180,6 +200,8 @@ public class ScheduleGUI extends JPanel{
 		add(middle);
 		add(right);
 	
+		repaint();
+		
 	}
 	
 	private enum Status {
@@ -305,33 +327,6 @@ public class ScheduleGUI extends JPanel{
 		return grid;
 	}
 	
-	/* delete this method */
-	public static void createAndDisplayGUI(Calendar calendar){
-		ScheduleGUI scheduleGUI = new ScheduleGUI("Dan", null);
-		
-		JFrame frame = new JFrame("Calendar");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(scheduleGUI);
-		frame.pack();
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	    int upperLeftCornerX = (screenSize.width - frame.getWidth()) / 2;
-	    int upperLeftCornerY = (screenSize.height - frame.getHeight()) / 2;
-	    frame.setLocation(upperLeftCornerX, upperLeftCornerY);
-	    
-		frame.setVisible(true);
-	}
 	
-	
-	public static void main(String[] args){
-		Runnable createShowGUI = new Runnable() {
-			public void run(){
-				int maxRows = HOURS_IN_DAY * SECTIONS_IN_HOUR;
-				int maxCols = DAYS_IN_WEEK;
-				ScheduleGUI.createAndDisplayGUI(new Calendar(maxRows, maxCols));
-			}
-		};
-		SwingUtilities.invokeLater(createShowGUI);
-	}
 	
 }

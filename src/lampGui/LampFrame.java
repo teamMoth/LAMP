@@ -215,7 +215,7 @@ public class LampFrame extends JFrame{
 		                    "Bob Lamp");
 					if (modifyName != null){
 					p3.removeAll();
-					mySchedule = new ScheduleGUI(modifyName, null);
+					mySchedule = new ScheduleGUI(modifyName, false);
 					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
 					p3.add(Box.createRigidArea(new Dimension(0,15)));
 					p3.add(mySchedule);
@@ -236,7 +236,7 @@ public class LampFrame extends JFrame{
 	                    "Bob Lamp");
 				if (modifyName != null){
 					p3.removeAll();
-					mySchedule = new ScheduleGUI(modifyName, database.getEntitySchedule(modifyName));
+					mySchedule = new ScheduleGUI(modifyName, true);
 					p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
 					p3.add(Box.createRigidArea(new Dimension(0,15)));
 					p3.add(mySchedule);
@@ -269,12 +269,7 @@ public class LampFrame extends JFrame{
 		});
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				try {
-					database.changeEntitySchedule(modifyName, mySchedule.getSchedule());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 				endCalendarAction.run();
 			}
 		});
