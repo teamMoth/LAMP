@@ -37,7 +37,7 @@ public class scheduleComparison {
 		while(i.hasNext()){
 			Time nextFree = i.next();
 			newSched.addEvent("FreeTime", new Time(nextFree.getWeekday(), nextFree.getHour(), nextFree.getMinute()), 
-					new Time(nextFree.getWeekday(), nextFree.getHour(), nextFree.getMinute()+Time.getInterval()));
+					new Time(nextFree.getWeekday(), nextFree.getHour(), nextFree.getMinute()+Time.TIME_INTERVAL));
 		}
 		
 		return newSched;

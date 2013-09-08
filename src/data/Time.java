@@ -9,9 +9,12 @@ import exceptions.InvalidEventException;
  */
 public class Time {
 
-	private static final int DAYS_A_WEEK = 7;
-	private static final int HOURS_A_DAY = 24;
-	private static final int TIME_INTERVAL = 15;
+	public static final int DAYS_A_WEEK = 7;
+	public static final int HOURS_A_DAY = 24;
+	//the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
+	public static final int TIME_INTERVAL = 15;
+	public static final int START_HOUR = 0;
+	public static final int END_HOUR = START_HOUR + HOURS_A_DAY;
 	private int hour;
 	private int minute;
 	private int weekday;
@@ -73,6 +76,9 @@ public class Time {
 			hour -= 24;
 		}
 		
+		if (hour > END_HOUR)
+			hour = END_HOUR;
+		
 		this.hour = hour;
 	}
 	
@@ -105,10 +111,10 @@ public class Time {
 	 */
 	public void setWeekday(int minute) {
 		while (weekday < 0)
-			weekday += 7;
+			weekday += DAYS_A_WEEK;
 		
 		while (weekday > 6)
-			weekday -= 7;
+			weekday -= DAYS_A_WEEK;
 		
 		this.weekday = nearestInterval(weekday);
 	}
@@ -119,35 +125,11 @@ public class Time {
 	 * @return if the two Time objects are equal
 	 */
 	public boolean equals(Time b){
-		if (this.weekday == b.weekday && this.hour == b.hour && this.minute == b.minute)
+		if (this.getWeekday() == b.getWeekday() && this.getHour() == b.getHour() 
+				&& this.getMinute() == b.getMinute())
 			return true;
 		else
 			return false;
-	}
-	
-	
-	/**
-	 * returns the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
-	 * @return time interval
-	 */
-	public static int getInterval(){
-		return TIME_INTERVAL;
-	}
-	
-	/**
-	 * returns the number of days a week in the calendar 
-	 * @return number of days considered by the calendar every week
-	 */
-	public static int getDaysWeek(){
-		return DAYS_A_WEEK;
-	}
-	
-	/**
-	 * returns the number of hours a day counted in the calendar 
-	 * @return number of hours a day considered by the calendar
-	 */
-	public static int getHoursDay(){
-		return HOURS_A_DAY;
 	}
 	
 	

@@ -9,7 +9,7 @@ public class Entity {
 
 	private Schedule entitySchedule;
 	private ArrayList<String> tags;
-	private String Name;
+	private String name;
 	private String ID;
 
 	/**
@@ -18,6 +18,7 @@ public class Entity {
 	public Entity() {
 		entitySchedule = new Schedule();
 		tags = new ArrayList<String>();
+        ID=String.valueOf(Integer.toHexString(this.hashCode()).toString().substring(4, 8));
 	}
 
 	/**
@@ -59,8 +60,22 @@ public class Entity {
 		return entitySchedule;
 	}
 
-	public void addEvent(String eventName, int startTime, int endTime) {
-		
+	/**
+	 * returns the name of the entity
+	 * @return name of this entity
+	 */
+	public String getName(){
+		return name;
+	}
+	
+	/**
+	 * adds an event to this entity's schedule
+	 * @param eventName name of the event to day
+	 * @param startTime starting time of the event to add
+	 * @param endTime ending time of the event to add
+	 */
+	public void addEvent(String eventName, Time startTime, Time endTime) {
+		entitySchedule.addEvent(eventName, startTime, endTime);
 	}
 	
 	
