@@ -10,8 +10,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
@@ -40,7 +37,7 @@ public class LampFrame extends JFrame{
 	String dayOfWeek,timeOfDay;
 	Icon icon = createImageIcon("images/lamp_small.png","logo");
 
-	public LampFrame(){
+	public LampFrame(String groupName){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("List All My Possibilities");
 		getContentPane().setBackground(Color.DARK_GRAY);
@@ -52,6 +49,7 @@ public class LampFrame extends JFrame{
 		JButton newTime = new JButton("Select a different time");
 		JButton addSchedule = new JButton("Enter a schedule");
 		JButton editSchedule = new JButton("Modify a schedule");
+		JButton switchGroupButton = new JButton("Switch group");
 		JButton backToMenu = new JButton("Submit");
 		JButton aboutButton = new JButton("About");
 		JPanel titlePanel = new JPanel();
@@ -60,6 +58,7 @@ public class LampFrame extends JFrame{
 		JPanel sideBySide = new JPanel();
 		display.setBackground(Color.BLACK);
 		sideBySide.setBackground(Color.BLACK);
+		//sideBySide.setBackground(Color.decode("0xFF7256"));
 		
 		display.setLayout(new BoxLayout(display, BoxLayout.PAGE_AXIS));
 		final JLabel title = new JLabel();
@@ -115,6 +114,7 @@ public class LampFrame extends JFrame{
 		newTime.setBackground(Color.YELLOW);
 		addSchedule.setBackground(Color.YELLOW);
 		editSchedule.setBackground(Color.YELLOW);
+		switchGroupButton.setBackground(Color.YELLOW);
 		backToMenu.setBackground(Color.BLACK);
 		aboutButton.setBackground(Color.YELLOW);
 		
@@ -134,13 +134,15 @@ public class LampFrame extends JFrame{
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null, null,
 	                    "3:00 pm");
+				title.setText("What is happening on " + dayOfWeek + " at " + timeOfDay + "?");
+
+				// refresh p1 with new info
 				}
-			// refresh p1 with new info
-			
 		});
 		setTimeToCurrent.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt) {
     			dayOfWeek = "RightNow";
+    			title.setText("What is happening right now?");
 				// refresh p1 with new info
 			}
 		});
@@ -173,6 +175,12 @@ public class LampFrame extends JFrame{
         			calendarAction.run();
 			}
 		});
+		switchGroupButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				// switch group info
+				// refresh all text fields
+			}
+		});
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 					endCalendarAction.run();
@@ -182,7 +190,8 @@ public class LampFrame extends JFrame{
 
         new Timer(120000, new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
-                // set to current time
+        		title.setText("What is happening right now?");
+            	// set to current time
             }
         }).start();
 		
@@ -193,6 +202,7 @@ public class LampFrame extends JFrame{
 		p2.add(newTime);
 		p2.add(addSchedule);
 		p2.add(editSchedule);
+		p2.add(switchGroupButton);
 		p2.add(aboutButton);
 		p3.setLayout(new BoxLayout(p3, BoxLayout.PAGE_AXIS ));
 		p3.add(Box.createVerticalGlue());

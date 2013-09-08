@@ -117,8 +117,8 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 	
-	public static String[] listOfDatabases(){
-		File f = new File("Databases");
+	public static String[] listOfEntityGroups(){
+		File f = new File("EntityGroups");
 		return f.list();
 	}
 	
