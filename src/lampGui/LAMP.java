@@ -27,12 +27,14 @@ import aurelienribon.tweenengine.Tween;
 public class LAMP{
 	
 	private static void createAndShowGui(){
+		// instantiates an instance of the backend
 		Database database = new Database();
 		
 		Tween.registerAccessor(LampPanel.class, new LampPanel.Accessor());
 		SLAnimator.start();
 		LampFrame frame = new LampFrame("",database);
 		
+		// opens frame depending on what group you want information about
 		if (MidEndFormatting.listOfEntityGroups().length > 1){
 			frame = new LampFrame((String)JOptionPane.showInputDialog(
                     frame, "Which group are you looking for?",

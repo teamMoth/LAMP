@@ -32,24 +32,27 @@ public class ScheduleGUI extends JPanel{
 		this.scheduleName = name;
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		JLabel leftTitle = new JLabel("Time");
-		JLabel middleTitle = new JLabel("Middle");
-		JLabel rightTitle = new JLabel("Right");
-		
-		JTextArea textArea = new JTextArea("SUN MON TUE WED THU FRI SAT");
-		textArea.setFont(new Font("Serif", Font.ITALIC, 11));
-		textArea.setEditable(false);
+		JLabel leftTitle = new JLabel();
+		leftTitle.setText("<html><b>TIME</b></html>");
 			    	
 		JPanel left = new JPanel();
 		left.setSize(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber);
 		left.setMinimumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		left.setMaximumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
-		left.setBackground(Color.WHITE);
+		left.setBackground(Color.decode("0xFFE1E1"));
 		left.add(leftTitle);
 		for (int i = 0; i < HOURS_IN_DAY; i ++){
 			for (int j = 0; j < SECTIONS_IN_HOUR; j ++){
-				String time = (Time.START_HOUR + i) + ":" + (j * 30);
+				
+				String time;
+				if (j == 0){
+					time = (Time.START_HOUR + i) + ":" + (j * 30) + "0";
+				}
+				else{
+					time = (Time.START_HOUR + i) + ":" + (j * 30);
+				}
+				
 				JLabel label = new JLabel(time);
 				left.add(label);
 			}
@@ -60,12 +63,11 @@ public class ScheduleGUI extends JPanel{
 		middle.setMinimumSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		middle.setMaximumSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		middle.setLayout(new BoxLayout(middle, BoxLayout.Y_AXIS));
-		middle.setBackground(Color.WHITE);
+		middle.setBackground(Color.decode("0xFFE1E1"));
 		
 		JPanel midTop = new JPanel();
 		midTop.setLayout(new BoxLayout(midTop, BoxLayout.X_AXIS));
-		midTop.setBackground(Color.WHITE);
-		//midTop.add(textArea);
+		midTop.setBackground(Color.decode("0xFFE1E1"));
 		JLabel sunLabel = new JLabel("SUN");
 		sunLabel.setSize(CELL_WIDTH, CELL_HEIGHT);
 		sunLabel.setMinimumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
@@ -84,11 +86,15 @@ public class ScheduleGUI extends JPanel{
 		midTop.add(Box.createRigidArea(new Dimension(CELL_WIDTH / 2, 0)));
 		midTop.add(new JLabel("SAT"));
 		
+		JPanel midMid = new JPanel();
+		midMid.add(new CalendarGUI());
+		midMid.setBackground(Color.WHITE);
+		
 		JPanel midBot = new JPanel();
-		midBot.add(new CalendarGUI());
-		midBot.setBackground(Color.WHITE);
+		midBot.setBackground(Color.decode("0xFFE1E1"));
 		
 		middle.add(midTop);
+		middle.add(midMid);
 		middle.add(midBot);
 		
 		JPanel right = new JPanel();
@@ -96,7 +102,7 @@ public class ScheduleGUI extends JPanel{
 		right.setMinimumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		right.setMaximumSize(new Dimension(PANEL_MIN_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		right.setLayout(new BoxLayout(right, BoxLayout.Y_AXIS));
-		right.setBackground(Color.WHITE);
+		right.setBackground(Color.decode("0xFFE1E1"));
 		
 		JButton classButton = new JButton("CLASS");
 		classButton.setBackground(Color.RED);
@@ -237,6 +243,19 @@ public class ScheduleGUI extends JPanel{
 				repaint();
 			}
 		}
+	}
+	
+	public String[][] getSchedule(){
+		TimeSlot[][] schedule = myCalendar.schedule;
+		String[][] stringSchedule = new String[schedule.length][schedule[0].length];
+		
+		for (int i = 0; i < schedule.length; i ++){
+			for (int j = 0; j < schedule[0].length; j ++){
+				stringSchedule[i][j] = schedule[i][j].getName() + ";" + schedule[i][j].getColor();
+			}
+		}
+		
+		return stringSchedule;
 	}
 	
 	public void processCell(int rowIndex, int colIndex){
