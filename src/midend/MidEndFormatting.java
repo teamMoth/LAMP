@@ -5,7 +5,6 @@ import comparison.scheduleComparison;
 import data.Time;
 import entities.Entity;
 import entities.EntityGroup;
-import entities.TimeEvent;
 
 public class MidEndFormatting {
 
