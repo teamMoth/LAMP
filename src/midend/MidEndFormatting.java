@@ -21,7 +21,7 @@ public class MidEndFormatting {
 	 * @return Schedule
 	 */
 	static String freePeople(EntityGroup eg, Time t){
-		String toReturn = "";
+		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(eg);
 		EntityGroup eg2 = sc.freeMembers(t);
@@ -37,10 +37,11 @@ public class MidEndFormatting {
 			}
 			
 			if(person){
-				toReturn += e.getName() + " is free right now\n";
+				toReturn += e.getName() + " is free right now<br>";
 			}
 		}
 		
+		toReturn += "</html>";
 		return toReturn;
 	}
 	
@@ -51,7 +52,7 @@ public class MidEndFormatting {
 	 * @return Schedule
 	 */
 	static String busyPeople(EntityGroup eg, Time t){
-		String toReturn = "";
+		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(eg);
 		EntityGroup eg2 = sc.freeMembers(t);
@@ -72,14 +73,15 @@ public class MidEndFormatting {
 		}
 		
 		for (Entity e : eg3.getEntities()){
-			toReturn += e.getName() + " is busy doing " + e.eventAtTime(t) + " and will be free at " + e.nextFree(t) + "\n";
+			toReturn += e.getName() + " is busy doing " + e.eventAtTime(t) + " and will be free at " + e.nextFree(t) + "<br>";
 		}
 		
+		toReturn += "</html>";
 		return toReturn;
 	}
 
 	static String openBuildings(EntityGroup buildings, Time t){
-		String toReturn = "";
+		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(buildings);
 		EntityGroup buildings2 = sc.freeMembers(t);
@@ -95,9 +97,10 @@ public class MidEndFormatting {
 			}
 			
 			if(building){
-				toReturn += e.getName() + " is currently open\n";
+				toReturn += e.getName() + " is currently open<br>";
 			}
 		}
+		toReturn += "</html>";
 		return toReturn;
 	}
 	
@@ -110,6 +113,11 @@ public class MidEndFormatting {
 		toReturn.setMinute(c.get(Calendar.MINUTE));
 		
 		return toReturn;
+	}
+	
+	static String[] listOfDatabases(){
+		
+		return null;
 	}
 
 }
