@@ -18,6 +18,7 @@ public class Database{
 	 */
 	public Database(){
 		grouplist = new EntityGroup("default", null, new ArrayList<Entity>());
+		this.changeEntityGroup("Buildings");
 	}
 	
 	/**
