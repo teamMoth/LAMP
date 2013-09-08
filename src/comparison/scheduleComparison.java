@@ -24,6 +24,7 @@ public class scheduleComparison {
 		this.LOE = LOE;
 		this.AOE = LOE.getEntities();
 	}
+	
 	/**
 	 * returns a Schedule, which contains all the free times for all members of the Entity Group LOE.
 	 * @return Schedule
