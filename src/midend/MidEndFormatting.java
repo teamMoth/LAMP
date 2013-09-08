@@ -96,24 +96,24 @@ public class MidEndFormatting {
 			toReturn += "<u>Rec Locations:</u><br>";
 		}
 		else{
-			toReturn += "<u>Diners:</u><br>";
+			toReturn += "<u>Buildings:</u><br>";
 		}
 		for (Entity e:buildings2.getEntities()){
 			ArrayList<String> tags = e.getTags();
-			boolean building = false;
-			boolean typeCheck = false;
+			//boolean building = false;
+			//boolean typeCheck = false;
 			for (String s : tags){
 				if(s.equalsIgnoreCase("building")){
-					building = true;
+					//building = true;
 				}
 				if(s.equalsIgnoreCase(type)){
-					typeCheck = true;
+					//typeCheck = true;
 				}
 			}
 			
-			if(building && typeCheck){
+			//if(building && typeCheck){
 				toReturn += e.getName() + " is currently open<br>";
-			}
+			//}
 		}
 		toReturn += "</html>";
 		return toReturn;
