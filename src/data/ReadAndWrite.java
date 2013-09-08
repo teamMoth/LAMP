@@ -9,7 +9,7 @@ import entities.Entity;
 
 public class ReadAndWrite {
 
-	public static void writeToFile(Entity ent){
+	public static void writeEntityToFile(Entity ent){
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
 		
