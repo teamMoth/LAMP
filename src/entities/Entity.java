@@ -1,12 +1,14 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
 import data.Time;
 
-public class Entity {
+public class Entity implements Serializable{
 
+	private static final long serialVersionUID = -6326844684848713032L;
 	private Schedule entitySchedule;
 	private ArrayList<String> tags;
 	private String name;

@@ -1,5 +1,7 @@
 package data;
 
+import java.io.Serializable;
+
 import exceptions.InvalidEventException;
 
 /**
@@ -7,8 +9,9 @@ import exceptions.InvalidEventException;
  * @author ganc
  *
  */
-public class Time {
+public class Time implements Serializable{
 
+	private static final long serialVersionUID = -6188245283950867206L;
 	public static final int DAYS_A_WEEK = 7;
 	public static final int HOURS_A_DAY = 24;
 	//the level of precision of time (i.e. 15 minutes, everything is rounded to the nearest 15.) 
