@@ -121,5 +121,10 @@ public class MidEndFormatting {
 		File f = new File("Databases");
 		return f.list();
 	}
+	
+	public static String[] listOfEntites(){
+		File f = new File("Entities");
+		return f.list();
+	}
 
 }
