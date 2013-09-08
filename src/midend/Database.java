@@ -83,7 +83,7 @@ public class Database{
 	public void changeEntityGroup(String newEntityGroup){
 		try {
 			grouplist = ReadAndWrite.readEntityGroupFromFile(newEntityGroup);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			grouplist = new EntityGroup();
 			grouplist.setName(newEntityGroup);
 		}
@@ -94,7 +94,7 @@ public class Database{
 		try {
 			entToChange = ReadAndWrite.readEntityFromFile(entityID);
 		}
-		catch (FileNotFoundException e) {
+		catch (IOException e) {
 			entToChange = new Entity();
 		}
 		entToChange.scheduleFromGUI(newSchedule);
@@ -109,7 +109,19 @@ public class Database{
 		}
 	}
 	
-	public void addEntity(String entityID, String[][] newSchedule, String entityGroup){
+	public void addEntity(String entityID, String[][] newSchedule){
 		
+		Entity newEntity = new Entity();
+		
+		try{
+			ReadAndWrite.readEntityFromFile(entityID);
+		}
+		catch(IOException e){
+			
+		}
+	}
+	
+	public Time getCurrentTime(){
+		return MidEndFormatting.systemTime();
 	}
 }

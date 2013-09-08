@@ -22,7 +22,7 @@ public class MidEndFormatting {
 	 * @param Time t
 	 * @return Schedule
 	 */
-	static String freePeople(EntityGroup eg, Time t){
+	public static String freePeople(EntityGroup eg, Time t){
 		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(eg);
@@ -53,7 +53,7 @@ public class MidEndFormatting {
 	 * @param Time t
 	 * @return Schedule
 	 */
-	static String busyPeople(EntityGroup eg, Time t){
+	public static String busyPeople(EntityGroup eg, Time t){
 		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(eg);
@@ -82,7 +82,7 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 
-	static String openBuildings(EntityGroup buildings, Time t, String type){
+	public static String openBuildings(EntityGroup buildings, Time t, String type){
 		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(buildings);
@@ -110,7 +110,7 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 	
-	static Time systemTime(){
+	public static Time systemTime(){
 		Time toReturn = new Time();
 		
 		Calendar c = Calendar.getInstance();
