@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,7 +29,6 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import data.Time;
-
 import midend.Database;
 
 public class LampFrame extends JFrame{
@@ -254,7 +254,12 @@ public class LampFrame extends JFrame{
 		});
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				database.changeEntitySchedule(modifyName, mySchedule.getSchedule());
+				try {
+					database.changeEntitySchedule(modifyName, mySchedule.getSchedule());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				endCalendarAction.run();
 			}
 		});

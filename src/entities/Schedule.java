@@ -37,6 +37,8 @@ public class Schedule implements Serializable{
 	 * @param strSched string representation of the schedule to add to Entity
 	 */
 	public Schedule (String[][] strSched) {
+		timeArray =  new TimeEvent[Time.DAYS_A_WEEK][Time.INTERVALS_A_DAY];
+		eventList = new ArrayList<TimeEvent>();
 		int startwk = 0, startintrvl = 0;
 		String schedStr = null, prevSchedStr;
 		

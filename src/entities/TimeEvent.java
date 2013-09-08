@@ -27,12 +27,7 @@ public class TimeEvent implements Serializable {
 	private Time startTime;
 	private Time endTime;
 	
-	/**
-	 * Empty constructor
-	 */
-	public TimeEvent() {
-	}
-	
+
 	/**
 	 * constructor with event name, start time and end time
 	 * @param name name of the event

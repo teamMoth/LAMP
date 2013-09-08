@@ -132,7 +132,10 @@ public class MidEndFormatting {
 	 */
 	public static String[] listOfEntityGroups(){
 		File f = new File("EntityGroups");
-		return f.list();
+		String[] strArr = f.list();
+		if (strArr == null)
+			strArr = new String[0];
+		return strArr;		
 	}
 
 }
