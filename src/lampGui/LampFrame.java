@@ -5,7 +5,6 @@ import aurelienribon.slidinglayout.SLConfig;
 import aurelienribon.slidinglayout.SLKeyframe;
 import aurelienribon.slidinglayout.SLPanel;
 import aurelienribon.slidinglayout.SLSide;
-import gui.MainGUI;
 import gui.ScheduleGUI;
 
 import java.awt.BorderLayout;
