@@ -15,11 +15,11 @@ public class MainGUI extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	private static int PANEL_MIN_WIDTH = 100;
-	private static int CELL_HEIGHT = 30;
-	private static int CELL_WIDTH = 30;
+	private static int CELL_HEIGHT = 15;
+	private static int CELL_WIDTH = 60;
 	private static int DAYS_IN_WEEK = 7;
-	private static int HOURS_IN_DAY = 6;
-	private static int SECTIONS_IN_HOUR = 4;
+	private static int HOURS_IN_DAY = 18;
+	private static int SECTIONS_IN_HOUR = 2;
 	private static boolean RAISED_CELL = true;
 	private Calendar myCalendar;
 	private int hardCodedNumber = 21;
@@ -47,8 +47,8 @@ public class MainGUI extends JPanel{
 		left.add(leftTitle);
 		for (int i = 0; i < HOURS_IN_DAY; i ++){
 			System.out.println(i);
-			for (int j = 0; j < 60 / Time.TIME_INTERVAL; j ++){
-				String time = (Time.START_HOUR + i) + ":" + (j * 15);
+			for (int j = 0; j < SECTIONS_IN_HOUR; j ++){
+				String time = (Time.START_HOUR + i) + ":" + (j * 30);
 				JLabel label = new JLabel(time);
 				label.setPreferredSize(new Dimension(PANEL_MIN_WIDTH, CELL_HEIGHT));
 				label.setMinimumSize(new Dimension(PANEL_MIN_WIDTH, CELL_HEIGHT));
@@ -57,7 +57,7 @@ public class MainGUI extends JPanel{
 				System.out.println("label added");
 			}
 		}
-
+		
 		JPanel middle = new JPanel();
 		middle.setPreferredSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
 		middle.setMinimumSize(new Dimension(DAYS_IN_WEEK * CELL_WIDTH, HOURS_IN_DAY * SECTIONS_IN_HOUR * CELL_HEIGHT + hardCodedNumber));
@@ -66,7 +66,18 @@ public class MainGUI extends JPanel{
 		
 		JPanel midTop = new JPanel();
 		midTop.setLayout(new BoxLayout(midTop, BoxLayout.X_AXIS));
-		midTop.add(textArea);
+		//midTop.add(textArea);
+		JLabel sunLabel = new JLabel("SUN");
+		sunLabel.setSize(CELL_WIDTH, CELL_HEIGHT);
+		sunLabel.setMinimumSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
+		
+		midTop.add(new JLabel("SUN"));
+		midTop.add(new JLabel("MON"));
+		midTop.add(new JLabel("TUE"));
+		midTop.add(new JLabel("WED"));
+		midTop.add(new JLabel("THU"));
+		midTop.add(new JLabel("FRI"));
+		midTop.add(new JLabel("SAT"));
 		
 		JPanel midBot = new JPanel();
 		midBot.add(new CalendarGUI());
