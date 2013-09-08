@@ -6,6 +6,7 @@ import comparison.scheduleComparison;
 
 import data.ReadAndWrite;
 import data.Time;
+import entities.Entity;
 import entities.EntityGroup;
 
 public class Database{
@@ -52,7 +53,28 @@ public class Database{
 		try {
 			grouplist = ReadAndWrite.readEntityGroupFromFile(newEntityGroup);
 		} catch (FileNotFoundException e) {
-			
+			grouplist = new EntityGroup();
+			grouplist.setName(newEntityGroup);
+		}
+	}
+	
+	public void changeEntitySchedule(String entityID, String[][] newSchedule){
+		Entity entToChange = null;
+		try {
+			entToChange = ReadAndWrite.readEntityFromFile(entityID);
+		}
+		catch (FileNotFoundException e) {
+			entToChange = new Entity();
+		}
+		entToChange.scheduleFromGUI(newSchedule);
+		
+		try{
+			ReadAndWrite.writeEntityToFile(entToChange);
+		}
+		catch (FileNotFoundException e){
+			System.out.println("Lament! All Progress Missing!");
+			e.printStackTrace();
+			return;
 		}
 	}
 }
