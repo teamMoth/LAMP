@@ -65,7 +65,7 @@ public class Time implements Serializable{
 	 * @param timeOfDay
 	 * @throws InvalidEventException throws if dayOfWeek is not recognized
 	 */
-	public Time(String dayOfWeek, String timeOfDay) throws InvalidEventException, NumberFormatException{
+	public Time(String dayOfWeek, String timeOfDay) throws NumberFormatException{
 		if (dayOfWeek.equals("RightNow")){
 			// method to get current time
 		}
@@ -93,7 +93,7 @@ public class Time implements Serializable{
 				weekday = 6;
 				break;
 			default:
-				throw new InvalidEventException();
+				weekday = 0;
 			}
 			String[] brokenTime = timeOfDay.split(" ");
 			if (brokenTime[0].contains(":")){
