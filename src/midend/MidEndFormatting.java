@@ -75,7 +75,7 @@ public class MidEndFormatting {
 		}
 		
 		for (Entity e : eg3.getEntities()){
-			toReturn += e.getName() + " is busy doing " + e.eventAtTime(t) + " and will be free at " + e.nextFree(t) + "<br>";
+			toReturn += e.getName() + " is busy doing " + e.getEventAtTime(t) + " and will be free at " + e.nextFree(t) + "<br>";
 		}
 		
 		toReturn += "</html>";
