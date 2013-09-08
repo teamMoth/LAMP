@@ -238,6 +238,10 @@ public class Time implements Serializable{
 		return result;
 	}
 
-
+	private String[] weekdayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	@Override
+	public String toString() {
+		return weekdayNames[this.getWeekday()] + " " + ( this.getHour() % 12 ) + ":" + this.getMinute() + ((this.getHour() / 12 == 0) ? "am" : "pm");
+	}
 
 }

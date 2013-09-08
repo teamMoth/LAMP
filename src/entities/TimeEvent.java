@@ -49,6 +49,6 @@ public class TimeEvent {
 	
 	@Override
 	public String toString() {
-		return name;
+		return name + "(Start: " + startTime + " End: " + endTime + ")";
 	}
 }
