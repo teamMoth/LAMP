@@ -163,7 +163,12 @@ public class Schedule implements Serializable{
 		for (int wk = 0; wk < Time.DAYS_A_WEEK; wk++) {
 			for (int intrvl = 0; intrvl < Time.INTERVALS_A_DAY; intrvl++) {
 				TimeEvent event = getEventAtTime(new Time(wk, intrvl));
-				String str = event.getName() + ";" + event.getProperty("COLOR");
+				String str;
+				if (event != null) {
+					str = event.getName() + ";" + event.getProperty("COLOR");
+				} else {
+					str = "FREE;";
+				}
 				strSched[wk][intrvl] = str;
 			}
 		}
