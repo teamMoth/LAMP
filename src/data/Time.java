@@ -169,5 +169,55 @@ public class Time {
 		}
 	}
 	
+	/**
+	 * Compares this current Time object to another Time object passed to the method.
+	 * 
+	 * @param Time t - the time object for "this" to be compared to
+	 * @return 0 if they're equal, a positive number if THIS is greater than t, and 
+	 * a negative number if t is greater than THIS
+	 */
+	public int compareTo(Time t){
+		if(this.getWeekday() == t.getWeekday()){
+			if(this.getHour() == t.getHour()){
+				if (this.getMinute() == t.getMinute()){
+					return 0;
+				}
+				else{
+					return this.getMinute() - t.getMinute();
+				}
+			}
+			else{
+				return this.getHour() - t.getHour();
+			}
+		}
+		else{
+			return this.getWeekday() - t.getWeekday();
+		}
+	}
 	
+	/**
+	 * Compares this current Time object to another Time object passed to the method.
+	 * 
+	 * @param Time t - the time object for "this" to be compared to
+	 * @return a new Time object, with the absolute value of the difference in the times between the 
+	 * two times objects.
+	 */
+	public Time timeDiff(Time t){
+		if(this.getWeekday() == t.getWeekday()){
+			if(this.getHour() == t.getHour()){
+				if (this.getMinute() == t.getMinute()){
+					return new Time(0,0,0);
+				}
+				else{
+					return new Time(0,0,Math.abs(this.getMinute() - t.getMinute()));
+				}
+			}
+			else{
+				return new Time(0,Math.abs(this.getHour() - t.getHour()),Math.abs(this.getMinute() - t.getMinute()));
+			}
+		}
+		else{
+			return new Time(Math.abs(this.getWeekday() - t.getWeekday()),Math.abs(this.getHour() - t.getHour()),Math.abs(this.getMinute() - t.getMinute()));
+		}
+	}
 }
