@@ -98,22 +98,5 @@ public class MidEndFormatting {
 	}
 
 
-	static void scheduleMaker(String[][] strSched, String ID) {
-		int startwk, startintrvl, endwk, endintrvl;
-		String schedStr, prevSchedStr;
-		ArrayList<Entity> entityList = Database.getEntityList();
-		for (int wkday = 0; wkday < strSched.length; wkday++){
-			for (int intrvl = 0; intrvl < strSched[wkday].length; intrvl++) {
-				prevSchedStr = schedStr;
-				schedStr = strSched[wkday][intrvl];
-
-				if (!schedStr.equalsIgnoreCase(prevSchedStr)) {
-
-				}
-
-				String eventName = schedStr.split(";")[0];
-			}
-		}
-	}
 
 }
