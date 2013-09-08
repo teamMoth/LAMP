@@ -22,6 +22,11 @@ public class Database{
 		return busyDuring(now);
 	}
 	
+	public String openNow(String type){
+		Time now = MidEndFormatting.systemTime();
+		return openDuring(now, type);
+	}
+	
 	public String freeDuring(Time t){
 		scheduleComparison sC = new scheduleComparison(grouplist);
 		EntityGroup free = sC.freeMembers(t);
@@ -36,10 +41,10 @@ public class Database{
 		return output;
 	}
 	
-	public String openDuring(Time t){
+	public String openDuring(Time t, String type){
 		scheduleComparison sC = new scheduleComparison(grouplist);
 		EntityGroup free = sC.freeMembers(t);
-		String output = MidEndFormatting.openBuildings(free, t);
+		String output = MidEndFormatting.openBuildings(free, t, type);
 		return output;
 	}
 	

@@ -82,7 +82,7 @@ public class MidEndFormatting {
 		return toReturn;
 	}
 
-	static String openBuildings(EntityGroup buildings, Time t){
+	static String openBuildings(EntityGroup buildings, Time t, String type){
 		String toReturn = "<html>";
 		
 		scheduleComparison sc = new scheduleComparison(buildings);
@@ -92,13 +92,17 @@ public class MidEndFormatting {
 		for (Entity e:buildings2.getEntities()){
 			ArrayList<String> tags = e.getTags();
 			boolean building = false;
+			boolean typeCheck = false;
 			for (String s : tags){
 				if(s.equalsIgnoreCase("building")){
 					building = true;
 				}
+				if(s.equalsIgnoreCase(type)){
+					typeCheck = true;
+				}
 			}
 			
-			if(building){
+			if(building && typeCheck){
 				toReturn += e.getName() + " is currently open<br>";
 			}
 		}
