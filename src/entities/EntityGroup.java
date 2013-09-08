@@ -9,6 +9,9 @@ public class EntityGroup {
 	private ArrayList<Entity> entityList= new ArrayList<Entity>();
 	private String name;
 	
+	public EntityGroup(){
+	}
+	
 	public EntityGroup(String ID) {
 		ReadAndWrite.readFromFile(ID);
 		//TODO
