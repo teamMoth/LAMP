@@ -1,6 +1,12 @@
 package midend;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 import comparison.scheduleComparison;
 import data.Time;
 import entities.Entity;
@@ -92,10 +98,18 @@ public class MidEndFormatting {
 				toReturn += e.getName() + " is currently open\n";
 			}
 		}
+		return toReturn;
+	}
+	
+	static Time systemTime(){
+		Time toReturn = new Time();
+		
+		Calendar c = Calendar.getInstance();
+		toReturn.setWeekday(c.get(Calendar.DAY_OF_WEEK));
+		toReturn.setHour(c.get(Calendar.HOUR_OF_DAY));
+		toReturn.setMinute(c.get(Calendar.MINUTE));
 		
 		return toReturn;
 	}
-
-
 
 }
