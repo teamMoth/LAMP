@@ -59,7 +59,7 @@ public class scheduleComparison {
 	 */
 	public EntityGroup freeMembers(Time t){
 		
-		EntityGroup freeMembs = new EntityGroup();
+		EntityGroup freeMembs = new EntityGroup("Free Memebers", null, new ArrayList<Entity>());
 		
 		Iterator<Entity> i = AOE.iterator();
 		while(i.hasNext()){

@@ -2,6 +2,7 @@ package midend;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import comparison.scheduleComparison;
 
@@ -15,7 +16,7 @@ public class Database{
 	EntityGroup grouplist;
 	
 	public Database(){
-		grouplist = new EntityGroup();
+		grouplist = new EntityGroup("default", null, new ArrayList<Entity>());
 	}
 	
 	public String freeNow(){
@@ -84,7 +85,7 @@ public class Database{
 		try {
 			grouplist = ReadAndWrite.readEntityGroupFromFile(newEntityGroup);
 		} catch (IOException e) {
-			grouplist = new EntityGroup();
+			grouplist = new EntityGroup(newEntityGroup, null, new ArrayList<Entity>());
 			grouplist.setName(newEntityGroup);
 		}
 	}

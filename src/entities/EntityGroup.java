@@ -13,12 +13,12 @@ public class EntityGroup {
 	private String ID;
 
 	
-	public EntityGroup(){
+/*	public EntityGroup(){
 		entityList = new ArrayList<Entity>();
 		this.ID = String.valueOf(Integer.toHexString(this.hashCode()).toString()
 				.substring(4, 8));
 	}
-	
+*/
 	public EntityGroup(String name, String ID, ArrayList<Entity> entList) {
 		this.name = name;
 		this.ID = ID;

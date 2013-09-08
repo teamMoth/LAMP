@@ -58,7 +58,7 @@ public class MidEndFormatting {
 		
 		scheduleComparison sc = new scheduleComparison(eg);
 		EntityGroup eg2 = sc.freeMembers(t);
-		EntityGroup eg3 = new EntityGroup();
+		EntityGroup eg3 = new EntityGroup("Busy People", null, new ArrayList<Entity>());
 		
 		
 		for (Entity e : eg.getEntities()){
